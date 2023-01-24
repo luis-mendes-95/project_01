@@ -7,15 +7,18 @@ import {
 import HomePage from "./pages/HomePage";
 import PeoplePage from "./pages/PeoplePage";
 import { PeopleProvider } from "./contexts/people";
+import { ModalProvider } from "./contexts/modal";
 
 const AppRoutes = () => {
   return (
     <Router>
       <PeopleProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/peoplepage" element={<PeoplePage />} />
-        </Routes>
+        <ModalProvider>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/peoplepage" element={<PeoplePage />} />
+          </Routes>
+        </ModalProvider>
       </PeopleProvider>
     </Router>
   );

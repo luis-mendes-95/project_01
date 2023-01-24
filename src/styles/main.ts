@@ -62,3 +62,32 @@ export const UlRegs = styled.ul`
     }
 
 `;
+
+export const FormAdd = styled.form`
+
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 5px;
+
+    .div_close_button{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    button{
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover{
+        transition: 0.3s;
+        transform: scale(1.1);
+    }
+
+    .p_error{
+        color: red;
+    }
+
+`;
