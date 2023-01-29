@@ -69,6 +69,73 @@ export const FormAdd = styled.form`
     flex-direction: column;
     padding: 20px;
     gap: 5px;
+    justify-content: center;
+    align-items: center;
+
+    .div_label_and_input{
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        justify-content: space-between;
+        width: 80%;
+
+        label{
+            width: 50%;
+            text-align: right;
+        }
+    }
+    
+    input, select {
+        width: 50%;
+    }
+
+    .div_close_button{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    button{
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover{
+        transition: 0.3s;
+        transform: scale(1.1);
+    }
+
+    .p_error{
+        color: red;
+    }
+
+`;
+
+export const FormEdit = styled.form`
+
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+
+    .div_label_and_input{
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        justify-content: space-between;
+        width: 80%;
+
+        label{
+            width: 50%;
+            text-align: right;
+        }
+    }
+    
+    input, select {
+        width: 50%;
+    }
 
     .div_close_button{
         width: 100%;

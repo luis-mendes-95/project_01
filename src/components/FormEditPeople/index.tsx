@@ -1,8 +1,8 @@
+import { FormEdit } from "../../styles/main";
 import Modal from "../Modal";
+import { useContext } from "react";
 import { ModalContext } from "../../contexts/modal";
 import { PeopleContext } from "../../contexts/people";
-import { useContext } from "react";
-import { FormAdd } from "../../styles/main";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,8 +27,10 @@ interface iRegisterPeople {
   site: string;
 }
 
-const FormNewPeople = () => {
-  const { register_people } = useContext(PeopleContext);
+const FormEditPeople = () => {
+  const { set_modal_edit } = useContext(ModalContext);
+  const { peopleDatabase, idToEdit, edit_people, delete_people } =
+    useContext(PeopleContext);
 
   const PeopleSchema = yup.object().shape({
     cpfCnpj: yup.string(),
@@ -53,24 +55,24 @@ const FormNewPeople = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<iRegisterPeople>({
-    resolver: yupResolver(PeopleSchema),
+  } = useForm<iRegisterPeople>({ resolver: yupResolver(PeopleSchema) });
+
+  const peopleToEdit = peopleDatabase.filter((person) => {
+    return person.id === idToEdit;
   });
 
-  const { set_modal_add } = useContext(ModalContext);
-
   const submit = (data: iRegisterPeople) => {
-    register_people(data);
-    set_modal_add();
+    edit_people(data);
+    set_modal_edit();
   };
 
   return (
     <Modal>
-      <FormAdd onSubmit={handleSubmit(submit)}>
-        <div className="div_close_button">
+      <FormEdit onSubmit={handleSubmit(submit)}>
+        <div>
           <button
             onClick={() => {
-              set_modal_add();
+              set_modal_edit();
             }}
           >
             X
@@ -81,6 +83,7 @@ const FormNewPeople = () => {
           <label>CPF/CNPJ</label>
           <input
             placeholder="Insira o cpf ou cnpj aqui"
+            defaultValue={peopleToEdit[0].cpfCnpj}
             {...register("cpfCnpj")}
           />
         </div>
@@ -94,6 +97,7 @@ const FormNewPeople = () => {
           <label>NOME / RAZÃO SOCIAL</label>
           <input
             placeholder="Insira o nome ou razão social aqui"
+            defaultValue={peopleToEdit[0].nomeRazao}
             {...register("nomeRazao")}
           />
         </div>
@@ -107,6 +111,7 @@ const FormNewPeople = () => {
           <label>APELIDO / NOME FANTASIA</label>
           <input
             placeholder="Insira o apelido ou nome fantasia aqui"
+            defaultValue={peopleToEdit[0].apelidoFantasia}
             {...register("apelidoFantasia")}
           />
         </div>
@@ -120,9 +125,27 @@ const FormNewPeople = () => {
           <label>TIPO</label>
           <select {...register("tipo")}>
             <option value="">Selecione o tipo de cadastro</option>
-            <option value="CLIENTE">CLIENTE</option>
-            <option value="FORNECEDOR">FORNECEDOR</option>
-            <option value="COLABORADOR">COLABORADOR</option>
+            {peopleToEdit[0].tipo === "CLIENTE" ? (
+              <option value="CLIENTE" selected>
+                CLIENTE
+              </option>
+            ) : (
+              <option value="CLIENTE">CLIENTE</option>
+            )}
+            {peopleToEdit[0].tipo === "FORNECEDOR" ? (
+              <option value="FORNECEDOR" selected>
+                FORNECEDOR
+              </option>
+            ) : (
+              <option value="FORNECEDOR">FORNECEDOR</option>
+            )}
+            {peopleToEdit[0].tipo === "COLABORADOR" ? (
+              <option value="COLABORADOR" selected>
+                COLABORADOR
+              </option>
+            ) : (
+              <option value="COLABORADOR">COLABORADOR</option>
+            )}
           </select>
         </div>
         {errors.tipo?.message && (
@@ -135,6 +158,7 @@ const FormNewPeople = () => {
           <label>INSCRIÇÃO ESTADUAL</label>
           <input
             placeholder="Insira a inscrição estadual aqui"
+            defaultValue={peopleToEdit[0].insEstadual}
             {...register("insEstadual")}
           />
         </div>
@@ -148,6 +172,7 @@ const FormNewPeople = () => {
           <label>INSCRIÇÃO MUNICIPAL</label>
           <input
             placeholder="Insira a inscrição municipal aqui"
+            defaultValue={peopleToEdit[0].insMunicipal}
             {...register("insMunicipal")}
           />
         </div>
@@ -161,6 +186,7 @@ const FormNewPeople = () => {
           <label>CEP</label>
           <input
             placeholder="Insira o CEP aqui"
+            defaultValue={peopleToEdit[0].cep}
             {...register("cep")}
           />
         </div>
@@ -174,6 +200,7 @@ const FormNewPeople = () => {
           <label>RUA</label>
           <input
             placeholder="Insira o nome da rua aqui"
+            defaultValue={peopleToEdit[0].rua}
             {...register("rua")}
           />
         </div>
@@ -187,6 +214,7 @@ const FormNewPeople = () => {
           <label>Nº</label>
           <input
             placeholder="Insira o Nº aqui"
+            defaultValue={peopleToEdit[0].numero}
             {...register("numero")}
           />
         </div>
@@ -200,6 +228,7 @@ const FormNewPeople = () => {
           <label>COMPLEMENTO</label>
           <input
             placeholder="Insira o complemento aqui"
+            defaultValue={peopleToEdit[0].complemento}
             {...register("complemento")}
           />
         </div>
@@ -213,6 +242,7 @@ const FormNewPeople = () => {
           <label>BAIRRO</label>
           <input
             placeholder="Insira o bairro aqui"
+            defaultValue={peopleToEdit[0].bairro}
             {...register("bairro")}
           />
         </div>
@@ -226,6 +256,7 @@ const FormNewPeople = () => {
           <label>CIDADE</label>
           <input
             placeholder="Insira a cidade aqui"
+            defaultValue={peopleToEdit[0].cidade}
             {...register("cidade")}
           />
         </div>
@@ -239,6 +270,7 @@ const FormNewPeople = () => {
           <label>TELEFONE</label>
           <input
             placeholder="Insira o telefone aqui"
+            defaultValue={peopleToEdit[0].telefone}
             {...register("telefone")}
           />
         </div>
@@ -252,6 +284,7 @@ const FormNewPeople = () => {
           <label>CELULAR</label>
           <input
             placeholder="Insira o celular aqui"
+            defaultValue={peopleToEdit[0].celular}
             {...register("celular")}
           />
         </div>
@@ -265,6 +298,7 @@ const FormNewPeople = () => {
           <label>E-MAIL</label>
           <input
             placeholder="Insira o e-mail aqui"
+            defaultValue={peopleToEdit[0].email}
             {...register("email")}
           />
         </div>
@@ -278,6 +312,7 @@ const FormNewPeople = () => {
           <label>SITE</label>
           <input
             placeholder="Insira o site aqui"
+            defaultValue={peopleToEdit[0].site}
             {...register("site")}
           />
         </div>
@@ -288,9 +323,17 @@ const FormNewPeople = () => {
         )}
 
         <button type="submit">Save</button>
-      </FormAdd>
+        <button
+          onClick={() => {
+            set_modal_edit();
+            delete_people(idToEdit);
+          }}
+        >
+          Delete
+        </button>
+      </FormEdit>
     </Modal>
   );
 };
 
-export default FormNewPeople;
+export default FormEditPeople;
