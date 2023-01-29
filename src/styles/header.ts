@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Header_app = styled.header`
+export const HeaderApp = styled.header`
 
     button {
         background-color: black;
