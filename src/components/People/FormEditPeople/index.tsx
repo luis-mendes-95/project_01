@@ -1,8 +1,8 @@
-import { FormEdit } from "../../styles/main";
-import Modal from "../Modal";
+import { FormEdit } from "../../../styles/main";
+import Modal from "../../Modal";
 import { useContext } from "react";
-import { ModalContext } from "../../contexts/modal";
-import { PeopleContext } from "../../contexts/people";
+import { ModalContext } from "../../../contexts/modal";
+import { PeopleContext } from "../../../contexts/people";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,7 +28,7 @@ interface iRegisterPeople {
 }
 
 const FormEditPeople = () => {
-  const { set_modal_edit } = useContext(ModalContext);
+  const { set_modal_edit_people } = useContext(ModalContext);
   const { peopleDatabase, idToEdit, edit_people, delete_people } =
     useContext(PeopleContext);
 
@@ -63,7 +63,7 @@ const FormEditPeople = () => {
 
   const submit = (data: iRegisterPeople) => {
     edit_people(data);
-    set_modal_edit();
+    set_modal_edit_people();
   };
 
   return (
@@ -72,7 +72,7 @@ const FormEditPeople = () => {
         <div>
           <button
             onClick={() => {
-              set_modal_edit();
+              set_modal_edit_people();
             }}
           >
             X
@@ -325,7 +325,7 @@ const FormEditPeople = () => {
         <button type="submit">Save</button>
         <button
           onClick={() => {
-            set_modal_edit();
+            set_modal_edit_people();
             delete_people(idToEdit);
           }}
         >

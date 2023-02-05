@@ -10,6 +10,7 @@ const Header = () => {
     <HeaderApp>
         <button onClick={()=>{navigate("/")}}>Home</button>
         <button onClick={()=>{navigate("/peoplepage")}}>People</button>
+        <button onClick={()=>{navigate("/productspage")}}>Products</button>
     </HeaderApp>
   )
 }

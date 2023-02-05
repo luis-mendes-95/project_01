@@ -1,8 +1,8 @@
-import Modal from "../Modal";
-import { ModalContext } from "../../contexts/modal";
-import { PeopleContext } from "../../contexts/people";
+import Modal from "../../Modal";
+import { ModalContext } from "../../../contexts/modal";
+import { PeopleContext } from "../../../contexts/people";
 import { useContext } from "react";
-import { FormAdd } from "../../styles/main";
+import { FormAdd } from "../../../styles/main";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -57,11 +57,11 @@ const FormNewPeople = () => {
     resolver: yupResolver(PeopleSchema),
   });
 
-  const { set_modal_add } = useContext(ModalContext);
+  const { set_modal_add_people } = useContext(ModalContext);
 
   const submit = (data: iRegisterPeople) => {
     register_people(data);
-    set_modal_add();
+    set_modal_add_people();
   };
 
   return (
@@ -70,7 +70,7 @@ const FormNewPeople = () => {
         <div className="div_close_button">
           <button
             onClick={() => {
-              set_modal_add();
+              set_modal_add_people();
             }}
           >
             X

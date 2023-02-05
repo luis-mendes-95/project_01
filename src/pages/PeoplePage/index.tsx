@@ -1,9 +1,10 @@
-import DashPeople from "../../components/DashPeople";
+import DashPeople from "../../components/People/DashPeople";
 import Header from "../../components/Header";
 import { ModalContext } from "../../contexts/modal";
 import { useContext } from "react";
-import FormNewPeople from "../../components/FormNewPeople";
-import FormEditPeople from "../../components/FormEditPeople";
+import FormNewPeople from "../../components/People/FormNewPeople";
+import FormEditPeople from "../../components/People/FormEditPeople";
+
 
 const PeoplePage = () => {
   const { showModalAddPeople, showModalEditPeople } = useContext(ModalContext);
