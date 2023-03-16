@@ -10,21 +10,26 @@ import { PeopleProvider } from "./contexts/people";
 import { ModalProvider } from "./contexts/modal";
 import { ProductsProvider } from "./contexts/products";
 import ProductsPage from "./pages/ProductPage";
+import { SalesProvider } from "./contexts/sales";
+import SalesPage from "./pages/SalesPage";
 
 const AppRoutes = () => {
   return (
     <Router>
-      <PeopleProvider>
-        <ProductsProvider>
-          <ModalProvider>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/peoplepage" element={<PeoplePage />} />
-              <Route path="/productspage" element={<ProductsPage />} />
-            </Routes>
-          </ModalProvider>
-        </ProductsProvider>
-      </PeopleProvider>
+      <SalesProvider>
+        <PeopleProvider>
+          <ProductsProvider>
+            <ModalProvider>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/peoplepage" element={<PeoplePage />} />
+                <Route path="/productspage" element={<ProductsPage />} />
+                <Route path="/salespage" element={<SalesPage />} />
+              </Routes>
+            </ModalProvider>
+          </ProductsProvider>
+        </PeopleProvider>
+      </SalesProvider>
     </Router>
   );
 };

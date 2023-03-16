@@ -83,16 +83,69 @@ export const FormAdd = styled.form`
             width: 50%;
             text-align: right;
         }
+
     }
-    
-    input, select {
+
+    input, select, textarea {
         width: 50%;
     }
+
+    .divFormFields{
+        width: 80%;
+        display:flex;
+        flex-direction:column;
+        gap:5px;
+        border: 1pt solid black;
+        border-radius: 8px;
+        padding: 8px;
+        background-color: #8080802b;
+        overflow-y: scroll;
+        max-height: 40vh;
+    }
+
+    .divIndividualItemSale {
+        border: 1pt solid black;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .divButtonsControlForms{
+        width: 100px;
+        display: flex;
+        gap: 5px;
+        position: sticky;
+        top: 10px;
+
+        button{
+            border: none;
+            padding: 5px;
+        }
+
+        .buttonRed{
+            width: 100%;
+            background-color: red;
+            color: white;
+        }
+
+        .buttonGreen{
+            width: 100%;
+            background-color: green;
+            color: white;
+        }
+
+    }
+
 
     .div_close_button{
         width: 100%;
         display: flex;
         justify-content: flex-end;
+    }
+
+    .p_error{
+        color: red;
     }
 
     button{
@@ -104,16 +157,11 @@ export const FormAdd = styled.form`
         transition: 0.3s;
         transform: scale(1.1);
     }
-
-    .p_error{
-        color: red;
-    }
-
 `;
 
 export const FormEdit = styled.form`
 
-    display: flex;
+display: flex;
     flex-direction: column;
     padding: 20px;
     gap: 5px;
@@ -126,21 +174,21 @@ export const FormEdit = styled.form`
         gap: 15px;
         justify-content: space-between;
         width: 80%;
+    }
 
-        label{
-            width: 50%;
-            text-align: right;
-        }
-    }
-    
     input, select {
-        width: 50%;
+        width: 54%;
     }
+
 
     .div_close_button{
         width: 100%;
         display: flex;
         justify-content: flex-end;
+    }
+
+    .p_error{
+        color: red;
     }
 
     button{
@@ -152,9 +200,4 @@ export const FormEdit = styled.form`
         transition: 0.3s;
         transform: scale(1.1);
     }
-
-    .p_error{
-        color: red;
-    }
-
 `;
