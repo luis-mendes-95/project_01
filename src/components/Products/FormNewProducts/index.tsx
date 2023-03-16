@@ -6,6 +6,7 @@ import { FormAdd } from "../../../styles/main";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { PeopleContext } from "../../../contexts/people";
 
 interface iRegisterProducts {
   id: number;
@@ -20,6 +21,7 @@ interface iRegisterProducts {
 
 const FormNewProducts = () => {
   const { register_products } = useContext(ProductsContext);
+  const { peopleDatabase } = useContext(PeopleContext);
 
   const ProductsSchema = yup.object().shape({
     description: yup.string().required("É necessário inserir uma descrição"),
@@ -121,11 +123,16 @@ const FormNewProducts = () => {
 
         <div className="div_label_and_input">
           <label>FORNECEDOR</label>
-          <input
-            placeholder="Insira o fornecedor aqui"
-            {...register("supplier")}
-          />
+          <select {...register("supplier")}>
+            <option value="">Selecione o fornecedor:</option>
+            {peopleDatabase.map((person) => {
+              return (
+                <option key={person.id} value={person.nomeRazao}>{person.nomeRazao}</option>
+              );
+            })}
+          </select>
         </div>
+
         {errors.supplier?.message && (
           <p className="p_error" aria-label="error">
             {errors.supplier.message}

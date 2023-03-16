@@ -6,6 +6,7 @@ import { ProductsContext } from "../../../contexts/products";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { PeopleContext } from "../../../contexts/people";
 
 interface iRegisterProducts {
   id: number;
@@ -22,6 +23,7 @@ const FormEditProducts = () => {
   const { set_modal_edit_products } = useContext(ModalContext);
   const { productsDatabase, idToEdit, edit_products, delete_products } =
     useContext(ProductsContext);
+  const { peopleDatabase } = useContext(PeopleContext);
 
   const ProductsSchema = yup.object().shape({
     description: yup.string().required("É necessário inserir uma descrição"),
@@ -34,9 +36,11 @@ const FormEditProducts = () => {
     formState: { errors },
   } = useForm<iRegisterProducts>({ resolver: yupResolver(ProductsSchema) });
 
-  const productsToEdit = productsDatabase.filter((product: iRegisterProducts) => {
-    return product.id === idToEdit;
-  });
+  const productsToEdit = productsDatabase.filter(
+    (product: iRegisterProducts) => {
+      return product.id === idToEdit;
+    }
+  );
 
   const submit = (data: iRegisterProducts) => {
     edit_products(data);
@@ -128,12 +132,18 @@ const FormEditProducts = () => {
 
         <div className="div_label_and_input">
           <label>FORNECEDOR</label>
-          <input
-            placeholder="Insira o fornecedor aqui"
-            defaultValue={productsToEdit[0].supplier}
-            {...register("supplier")}
-          />
+          <select {...register("supplier")}>
+            <option value={productsToEdit[0].supplier}>
+              {productsToEdit[0].supplier}
+            </option>
+            {peopleDatabase.map((person) => {
+              return (
+                <option key={person.id} value={person.nomeRazao}>{person.nomeRazao}</option>
+              );
+            })}
+          </select>
         </div>
+
         {errors.supplier?.message && (
           <p className="p_error" aria-label="error">
             {errors.supplier.message}
