@@ -1,14 +1,11 @@
 import { DivBackgroundModal } from "../../styles/modal"
+import IModal from "../../interfaces/modal.interface"
 
-interface iModal {
-    children: React.ReactNode
-}
-
-const Modal = ({children}: iModal) => {
+const Modal = ({children}: IModal) => {
   return (
     <DivBackgroundModal>
 
-        <div className="div_modal_info">
+        <div className="divModalInfo">
             {children}
         </div>
 

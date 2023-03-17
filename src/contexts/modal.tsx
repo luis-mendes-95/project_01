@@ -5,14 +5,14 @@ interface iModalProviderFunctions {
   showModalEditPeople: boolean;
   showModalAddProducts: boolean;
   showModalEditProducts: boolean;
-  set_modal_add_people: () => void;
-  set_modal_edit_people: () => void;
-  set_modal_add_products: () => void;
-  set_modal_edit_products: () => void;
+  setModalAddPeople: () => void;
+  setModalEditPeople: () => void;
+  setModalAddProducts: () => void;
+  setModalEditProducts: () => void;
   showModalAddSales: boolean;
   showModalEditSales: boolean;
-  set_modal_add_sale: () => void;
-  set_modal_edit_sale: () => void;
+  setModalAddSale: () => void;
+  setModalEditSale: () => void;
 }
 
 interface iModalProviderProps {
@@ -24,6 +24,7 @@ export const ModalContext = createContext<iModalProviderFunctions>(
 );
 
 export const ModalProvider = ({ children }: iModalProviderProps) => {
+  
   const [showModalAddPeople, setShowModalAddPeople] = useState(false);
   const [showModalEditPeople, setShowModalEditPeople] = useState(false);
   const [showModalAddProducts, setShowModalAddProducts] = useState(false);
@@ -31,27 +32,27 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
   const [showModalAddSales, setShowModalAddSales] = useState(false);
   const [showModalEditSales, setShowModalEditSales] = useState(false);
 
-  const set_modal_add_people = () => {
+  const setModalAddPeople = () => {
     setShowModalAddPeople(!showModalAddPeople);
   };
 
-  const set_modal_edit_people = () => {
+  const setModalEditPeople = () => {
     setShowModalEditPeople(!showModalEditPeople);
   };
 
-  const set_modal_add_products = () => {
+  const setModalAddProducts = () => {
     setShowModalAddProducts(!showModalAddProducts);
   };
 
-  const set_modal_edit_products = () => {
+  const setModalEditProducts = () => {
     setShowModalEditProducts(!showModalEditProducts);
   };
 
-  const set_modal_add_sale = () => {
+  const setModalAddSale = () => {
     setShowModalAddSales(!showModalAddSales);
   };
 
-  const set_modal_edit_sale = () => {
+  const setModalEditSale = () => {
     setShowModalEditSales(!showModalEditSales);
   };
 
@@ -62,14 +63,14 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         showModalEditPeople,
         showModalAddProducts,
         showModalEditProducts,
-        set_modal_add_people,
-        set_modal_edit_people,
-        set_modal_add_products,
-        set_modal_edit_products,
+        setModalAddPeople,
+        setModalEditPeople,
+        setModalAddProducts,
+        setModalEditProducts,
         showModalAddSales,
         showModalEditSales,
-        set_modal_add_sale,
-        set_modal_edit_sale
+        setModalAddSale,
+        setModalEditSale
       }}
     >
       {children}

@@ -1,7 +1,6 @@
 import { HeaderApp } from "../../styles/header"
 import { useNavigate } from "react-router-dom"
 
-
 const Header = () => {
 
   const navigate = useNavigate()

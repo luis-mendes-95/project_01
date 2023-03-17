@@ -1,22 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
-
-interface iRegisterProducts {
-    id: number;
-    code: number;
-    description: string;
-    cost: number;
-    price: number;
-    margin: number;
-    supplier: string;
-    qty: number;
-  }
+import IRegisterProducts from '../interfaces/products.interface';
+import { RegConfig } from "../contexts/regConfig";
+import { useContext } from "react";
 
 interface iProductsProviderFunctions {
-    set_id_edit: (id: number) => void
-    register_products: (data: iRegisterProducts) => void
-    edit_products: (data: iRegisterProducts) => void
-    delete_products: (id: number) => void
-    productsDatabase: iRegisterProducts[]
+    setIdEdit: (id: number) => void
+    registerProducts: (data: IRegisterProducts) => void
+    editProducts: (data: IRegisterProducts) => void
+    deleteProducts: (id: number) => void
+    productsDatabase: IRegisterProducts[]
     idToEdit: number
 }
 
@@ -28,9 +20,9 @@ export const ProductsContext = createContext<iProductsProviderFunctions>({} as i
 
 export const ProductsProvider = ({children}: iProductsProviderProps) => {
 
-    const createKey = () => Math.floor(Math.random() * 1029384756102201)
+    const { createKey } = useContext(RegConfig)
 
-    const [productsDatabase, setProductsDatabase] = useState([] as iRegisterProducts[])
+    const [productsDatabase, setProductsDatabase] = useState([] as IRegisterProducts[])
     const [idToEdit, setIdToEdit] = useState(0)
 
     useEffect(()=>{
@@ -42,13 +34,13 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
 
     },[])
 
-    const set_id_edit = (id: number) => {
+    const setIdEdit = (id: number) => {
         setIdToEdit(id)
     }
 
-    const register_products = (data: iRegisterProducts) => {
+    const registerProducts = (data: IRegisterProducts) => {
         
-        const new_person = {
+        const newProduct = {
             id: createKey(),
             code: data.code,
             description: data.description,
@@ -59,16 +51,16 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
             qty: data.qty
         }
 
-        const newData = [...productsDatabase, new_person]
+        const newData = [...productsDatabase, newProduct]
         setProductsDatabase(newData)
         localStorage.setItem("@project01_products_database", JSON.stringify(newData))
         return newData
 
     }
 
-    const edit_products = (data: iRegisterProducts) => {
+    const editProducts = (data: IRegisterProducts) => {
        
-        const editted_products = {
+        const edittedProduct = {
             id: idToEdit,
             code: data.code,
             description: data.description,
@@ -81,7 +73,7 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
 
         const newDatabase = productsDatabase.map((product)=>{
             if (product.id === idToEdit) {
-                return editted_products
+                return edittedProduct
             } else {
                 return product
             }
@@ -93,7 +85,7 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
 
     }
 
-    const delete_products = (id: number) => {
+    const deleteProducts = (id: number) => {
         const newDataBase = productsDatabase.filter((product)=>{
             return product.id !== id
         })
@@ -102,14 +94,13 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
         setIdToEdit(0)
     }
 
-
     return(
 
         <ProductsContext.Provider value={{
-            set_id_edit,
-            register_products,
-            edit_products,
-            delete_products,
+            setIdEdit,
+            registerProducts,
+            editProducts,
+            deleteProducts,
             productsDatabase,
             idToEdit
         }}>

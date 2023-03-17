@@ -4,80 +4,40 @@ import { PeopleContext } from "../../../contexts/people";
 import { useContext } from "react";
 import { FormAdd } from "../../../styles/main";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-interface iRegisterPeople {
-  id: number;
-  cpfCnpj: string;
-  nomeRazao: string;
-  apelidoFantasia: string;
-  tipo: string;
-  insEstadual: string;
-  insMunicipal: string;
-  cep: string;
-  rua: string;
-  numero: string;
-  complemento: string;
-  bairro: string;
-  cidade: string;
-  telefone: string;
-  celular: string;
-  email: string;
-  site: string;
-}
+import IRegisterPeople from "../../../interfaces/people.interface";
+import PeopleSchema from "../../../schemas/people.schema";
 
 const FormNewPeople = () => {
-  const { register_people } = useContext(PeopleContext);
 
-  const PeopleSchema = yup.object().shape({
-    cpfCnpj: yup.string(),
-    nomeRazao: yup.string().required("Este campo é obrigatório"),
-    apelidoFantasia: yup.string(),
-    tipo: yup.string().required("Este campo é obrigatório"),
-    insEstadual: yup.string(),
-    insMunicipal: yup.string(),
-    cep: yup.string(),
-    rua: yup.string(),
-    numero: yup.string(),
-    complemento: yup.string(),
-    bairro: yup.string(),
-    cidade: yup.string(),
-    telefone: yup.string(),
-    celular: yup.string(),
-    email: yup.string(),
-    site: yup.string(),
-  });
+  const { registerPeople } = useContext(PeopleContext);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<iRegisterPeople>({
-    resolver: yupResolver(PeopleSchema),
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm<IRegisterPeople>({resolver: yupResolver(PeopleSchema)});
 
-  const { set_modal_add_people } = useContext(ModalContext);
+  const { setModalAddPeople } = useContext(ModalContext);
 
-  const submit = (data: iRegisterPeople) => {
-    register_people(data);
-    set_modal_add_people();
+  const submit = (data: IRegisterPeople) => {
+    registerPeople(data);
+    setModalAddPeople();
   };
 
   return (
+
     <Modal>
+
       <FormAdd onSubmit={handleSubmit(submit)}>
-        <div className="div_close_button">
+
+        <div className="divCloseButton">
           <button
             onClick={() => {
-              set_modal_add_people();
+              setModalAddPeople();
             }}
           >
             X
           </button>
         </div>
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CPF/CNPJ</label>
           <input
             placeholder="Insira o cpf ou cnpj aqui"
@@ -85,12 +45,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.cpfCnpj?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.cpfCnpj.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>NOME / RAZÃO SOCIAL</label>
           <input
             placeholder="Insira o nome ou razão social aqui"
@@ -98,12 +58,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.nomeRazao?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.nomeRazao.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>APELIDO / NOME FANTASIA</label>
           <input
             placeholder="Insira o apelido ou nome fantasia aqui"
@@ -111,12 +71,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.apelidoFantasia?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.apelidoFantasia.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>TIPO</label>
           <select {...register("tipo")}>
             <option value="">Selecione o tipo de cadastro</option>
@@ -126,12 +86,12 @@ const FormNewPeople = () => {
           </select>
         </div>
         {errors.tipo?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.tipo.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>INSCRIÇÃO ESTADUAL</label>
           <input
             placeholder="Insira a inscrição estadual aqui"
@@ -139,12 +99,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.insEstadual?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.insEstadual.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>INSCRIÇÃO MUNICIPAL</label>
           <input
             placeholder="Insira a inscrição municipal aqui"
@@ -152,12 +112,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.insMunicipal?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.insMunicipal.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CEP</label>
           <input
             placeholder="Insira o CEP aqui"
@@ -165,12 +125,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.cep?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.cep.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>RUA</label>
           <input
             placeholder="Insira o nome da rua aqui"
@@ -178,12 +138,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.rua?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.rua.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>Nº</label>
           <input
             placeholder="Insira o Nº aqui"
@@ -191,12 +151,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.numero?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.numero.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>COMPLEMENTO</label>
           <input
             placeholder="Insira o complemento aqui"
@@ -204,12 +164,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.complemento?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.complemento.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>BAIRRO</label>
           <input
             placeholder="Insira o bairro aqui"
@@ -217,12 +177,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.bairro?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.bairro.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CIDADE</label>
           <input
             placeholder="Insira a cidade aqui"
@@ -230,12 +190,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.cidade?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.cidade.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>TELEFONE</label>
           <input
             placeholder="Insira o telefone aqui"
@@ -243,12 +203,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.telefone?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.telefone.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CELULAR</label>
           <input
             placeholder="Insira o celular aqui"
@@ -256,12 +216,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.celular?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.celular.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>E-MAIL</label>
           <input
             placeholder="Insira o e-mail aqui"
@@ -269,12 +229,12 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.email?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.email.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>SITE</label>
           <input
             placeholder="Insira o site aqui"
@@ -282,13 +242,15 @@ const FormNewPeople = () => {
           />
         </div>
         {errors.site?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.site.message}
           </p>
         )}
 
         <button type="submit">Save</button>
+
       </FormAdd>
+      
     </Modal>
   );
 };
