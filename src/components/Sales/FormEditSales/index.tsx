@@ -4,33 +4,38 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ModalContext } from "../../../contexts/modal";
 import { ProductsContext } from "../../../contexts/products";
-import { RegConfig } from "../../../contexts/regConfig";
 import Modal from "../../Modal";
 import { FormAdd } from "../../../styles/main";
 import { PeopleContext } from "../../../contexts/people";
 import { FormValues, IRegisterSales } from "../../../interfaces/sales.interface";
 import { saleSchema } from "../../../schemas/sales.schema";
 
-const FormNewSale = () => {
+const FormEditSale = () => {
 
-  const {registerSales } = useContext(SalesContext);
-  const { setModalAddSale } = useContext(ModalContext);
+  const { setModalEditSale } = useContext(ModalContext);
   const { productsDatabase } = useContext(ProductsContext);
   const { peopleDatabase } = useContext(PeopleContext);
-  const { createKey, getDate} = useContext(RegConfig)
+  const { salesDatabase, idToEdit, editSales, deleteSales } = useContext(SalesContext);
+
+  const saleToEdit = salesDatabase.filter((sale: IRegisterSales) => {
+    return sale.id === idToEdit;
+    }
+  );
 
   const {register, handleSubmit, control, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(saleSchema),
     defaultValues: {
-      id: createKey(),
-      date: getDate(),
-      client: "",
-      items: [{ code: null, description: "", price: null, obs: "" }],
-      total: 0,
-      payType: "",
-      received: 0,
+      id: saleToEdit[0].id,
+      date: saleToEdit[0].date,
+      client: saleToEdit[0].client,
+      items: saleToEdit[0].items,
+      total: saleToEdit[0].total,
+      payType: saleToEdit[0].payType,
+      received: saleToEdit[0].received,
     },
   });
+
+
 
   const { fields, append, remove } = useFieldArray({
     name: "items",
@@ -38,8 +43,8 @@ const FormNewSale = () => {
   });
 
   const submit = (data: IRegisterSales) => {
-    registerSales(data);
-    setModalAddSale();
+    editSales(data);
+    setModalEditSale();
   };
 
   return (
@@ -51,7 +56,7 @@ const FormNewSale = () => {
         <div className="divCloseButton">
           <button
             onClick={() => {
-              setModalAddSale();
+              setModalEditSale();
             }}
           >
             X
@@ -61,7 +66,7 @@ const FormNewSale = () => {
         <div className="divLabelAndInput">
           <label>CLIENTE</label>
           <select {...register("client")}>
-            <option value="">Selecione o cliente</option>
+            <option value={saleToEdit[0].client}>{saleToEdit[0].client}</option>
             {peopleDatabase.map((person) => {
               return (
                 <option key={person.id} value={person.nomeRazao}>{person.nomeRazao}</option>
@@ -103,6 +108,7 @@ const FormNewSale = () => {
                 <label>CÓDIGO</label>
                 <input
                   placeholder="Digite aqui o código do produto"
+                  
                   {...register(`items.${index}.code`, { valueAsNumber: true })}
                 />
               </div>
@@ -164,7 +170,9 @@ const FormNewSale = () => {
 
         <div className="divLabelAndInput">
           <label>TOTAL</label>
-          <input placeholder="Total Geral da Venda" {...register("total")} />
+          <input placeholder="Total Geral da Venda"
+          defaultValue={saleToEdit[0].total}
+          {...register("total")} />
         </div>
         {errors.total?.message && (
           <p className="pError" aria-label="error">
@@ -175,6 +183,7 @@ const FormNewSale = () => {
         <div className="divLabelAndInput">
           <label>RECEBIDO</label>
           <input
+          defaultValue={saleToEdit[0].received}
             placeholder="Digite o valor recebido"
             {...register("received")}
           />
@@ -188,7 +197,7 @@ const FormNewSale = () => {
         <div className="divLabelAndInput">
           <label>MÉTODO PAGAMENTO</label>
           <select {...register("payType")}>
-            <option value="">Selecione o método de pagamento:</option>
+            <option value={saleToEdit[0].payType}>{saleToEdit[0].payType}</option>
             <option value="avista">A vista</option>
             <option value="debito">Débito</option>
             <option value="credito">Crédito</option>
@@ -197,6 +206,10 @@ const FormNewSale = () => {
         </div>
 
         <button type="submit">Save</button>
+        <button onClick={()=>{
+          setModalEditSale()
+          deleteSales(idToEdit)}}>Delete</button>
+        
       </FormAdd>
 
     </Modal>
@@ -204,4 +217,4 @@ const FormNewSale = () => {
   );
 };
 
-export default FormNewSale;
+export default FormEditSale;
