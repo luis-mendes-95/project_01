@@ -1,29 +1,29 @@
 import { UlRegs } from "../../../styles/main";
 import { ModalContext } from "../../../contexts/modal";
 import { useContext } from "react";
-import { ProductsContext } from "../../../contexts/products";
-import { PeopleContext } from "../../../contexts/people";
 import { SalesContext } from "../../../contexts/sales";
 
 const DashSales = () => {
 
-  const { set_modal_add_sale, set_modal_edit_sale } = useContext(ModalContext);
-  const { productsDatabase } = useContext(ProductsContext);
-  const { peopleDatabase } = useContext(PeopleContext);
-  const { salesDatabase, set_id_edit } = useContext(SalesContext)
+  const { setModalAddSale, setModalEditSale } = useContext(ModalContext);
+  const { salesDatabase, setIdEdit } = useContext(SalesContext)
 
   return (
+
     <UlRegs>
-      <div className="div_title_ul_regs">
+
+      <div className="divTitleUlRegs">
         <h2>Sales</h2>
       </div>
 
-      <div className="div_reg_data_item">
-        <h3 className="h3_reg_data_item">Description</h3>
+      <div className="divRegDataItem">
+
+        <h3 className="h3RegDataItem">Description</h3>
+
         <button
-          className="button_add_new"
+          className="buttonAddNew"
           onClick={() => {
-            set_modal_add_sale();
+            setModalAddSale();
           }}
         >
           +
@@ -35,13 +35,15 @@ const DashSales = () => {
           <li key={sale.id}>
             <p>{sale.client}</p>
             <button onClick={()=>{
-              set_id_edit(sale.id)
-              set_modal_edit_sale()
+              setIdEdit(sale.id)
+              setModalEditSale()
             }}>Mais detalhes</button>
           </li>
         );
       })}
+
     </UlRegs>
+
   );
 };
 

@@ -1,203 +1,198 @@
 import styled from "styled-components";
 
 export const UlRegs = styled.ul`
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
 
-    width: 25%;
+  h2 {
+    color: orange;
+  }
+
+  .divTitleUlRegs {
+    width: 100%;
+    background-color: black;
     display: flex;
-    flex-direction: column;
-    gap: 10%;
+    justify-content: center;
+  }
 
-    h2 {
-        color: orange;
-    }
+  .divRegDataItem {
+    display: flex;
+    width: 100%;
+  }
 
-    .div_title_ul_regs{
-        width: 100%;
-        background-color: black;
-        display: flex;
-        justify-content: center;
-    }
+  .h3RegDataItem {
+    background-color: black;
+    color: orange;
+    width: 50%;
+    text-align: center;
+  }
 
-    .div_reg_data_item{
-        display: flex;
-        width: 100%;
-    }
+  .buttonAddNew {
+    background-color: black;
+    color: orange;
+    width: 50%;
+    text-align: center;
+  }
 
-    .h3_reg_data_item{
-        background-color: black;
-        color: orange;
-        width: 50%;
-        text-align: center;
-    }
+  li {
+    display: flex;
+    width: 100%;
+    margin: 2px 0;
+  }
 
-    .button_add_new{
-        background-color: black;
-        color: orange;
-        width: 50%;
-        text-align: center;
-    }
+  p {
+    width: 50%;
+    text-align: center;
+    border: 1pt solid black;
+  }
 
-    li {
-        display: flex;
-        width: 100%;
-        margin: 2px 0;
-    }
+  button {
+    width: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-    p {
-        width: 50%;
-        text-align: center;
-        border: 1pt solid black;
-    }
-
-    button {
-        width: 50%;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    button:hover{
-        background-color: orange;
-        transition: 0.3s;
-        color: black;
-    }
-
+  button:hover {
+    background-color: orange;
+    transition: 0.3s;
+    color: black;
+  }
 `;
 
 export const FormAdd = styled.form`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
 
+  .divLabelAndInput {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: space-between;
+    width: 80%;
+
+    label {
+      width: 50%;
+      text-align: right;
+    }
+  }
+
+  input,
+  select,
+  textarea {
+    width: 50%;
+  }
+
+  .divFormFields {
+    width: 80%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     gap: 5px;
-    justify-content: center;
-    align-items: center;
+    border: 1pt solid black;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #8080802b;
+    overflow-y: scroll;
+    max-height: 40vh;
+  }
 
-    .div_label_and_input{
-        display: flex;
-        flex-direction: row;
-        gap: 15px;
-        justify-content: space-between;
-        width: 80%;
+  .divIndividualItemSale {
+    border: 1pt solid black;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
 
-        label{
-            width: 50%;
-            text-align: right;
-        }
+  .divButtonsControlForms {
+    width: 100px;
+    display: flex;
+    gap: 5px;
+    position: sticky;
+    top: 10px;
 
+    button {
+      border: none;
+      padding: 5px;
     }
 
-    input, select, textarea {
-        width: 50%;
+    .buttonRed {
+      width: 100%;
+      background-color: red;
+      color: white;
     }
 
-    .divFormFields{
-        width: 80%;
-        display:flex;
-        flex-direction:column;
-        gap:5px;
-        border: 1pt solid black;
-        border-radius: 8px;
-        padding: 8px;
-        background-color: #8080802b;
-        overflow-y: scroll;
-        max-height: 40vh;
+    .buttonGreen {
+      width: 100%;
+      background-color: green;
+      color: white;
     }
+  }
 
-    .divIndividualItemSale {
-        border: 1pt solid black;
-        padding: 8px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
+  .divCloseButton {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
 
-    .divButtonsControlForms{
-        width: 100px;
-        display: flex;
-        gap: 5px;
-        position: sticky;
-        top: 10px;
+  .pError {
+    color: red;
+  }
 
-        button{
-            border: none;
-            padding: 5px;
-        }
+  button {
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-        .buttonRed{
-            width: 100%;
-            background-color: red;
-            color: white;
-        }
-
-        .buttonGreen{
-            width: 100%;
-            background-color: green;
-            color: white;
-        }
-
-    }
-
-
-    .div_close_button{
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .p_error{
-        color: red;
-    }
-
-    button{
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    button:hover{
-        transition: 0.3s;
-        transform: scale(1.1);
-    }
+  button:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
 `;
 
 export const FormEdit = styled.form`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
 
-display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
+  .divLabelAndInput {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: space-between;
+    width: 80%;
+  }
 
-    .div_label_and_input{
-        display: flex;
-        flex-direction: row;
-        gap: 15px;
-        justify-content: space-between;
-        width: 80%;
-    }
+  input,
+  select {
+    width: 54%;
+  }
 
-    input, select {
-        width: 54%;
-    }
+  .divCloseButton {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
 
+  .pError {
+    color: red;
+  }
 
-    .div_close_button{
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
+  button {
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-    .p_error{
-        color: red;
-    }
-
-    button{
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    button:hover{
-        transition: 0.3s;
-        transform: scale(1.1);
-    }
+  button:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+  }
 `;

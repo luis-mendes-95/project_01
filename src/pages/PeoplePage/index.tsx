@@ -7,6 +7,7 @@ import FormEditPeople from "../../components/People/FormEditPeople";
 
 
 const PeoplePage = () => {
+  
   const { showModalAddPeople, showModalEditPeople } = useContext(ModalContext);
 
   return (

@@ -4,59 +4,39 @@ import { ProductsContext } from "../../../contexts/products";
 import { useContext } from "react";
 import { FormAdd } from "../../../styles/main";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PeopleContext } from "../../../contexts/people";
-
-interface iRegisterProducts {
-  id: number;
-  code: number;
-  description: string;
-  cost: number;
-  price: number;
-  margin: number;
-  supplier: string;
-  qty: number;
-}
+import IRegisterProducts from '../../../interfaces/products.interface'
+import ProductsSchema from "../../../schemas/products.schema";
 
 const FormNewProducts = () => {
-  const { register_products } = useContext(ProductsContext);
+  const { registerProducts } = useContext(ProductsContext);
   const { peopleDatabase } = useContext(PeopleContext);
+  const { setModalAddProducts } = useContext(ModalContext);
 
-  const ProductsSchema = yup.object().shape({
-    description: yup.string().required("É necessário inserir uma descrição"),
-    price: yup.string().required("É necessário inserir o preço"),
-  });
+  const { register, handleSubmit, formState: { errors }} = useForm<IRegisterProducts>({resolver: yupResolver(ProductsSchema)});
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<iRegisterProducts>({
-    resolver: yupResolver(ProductsSchema),
-  });
-
-  const { set_modal_add_products } = useContext(ModalContext);
-
-  const submit = (data: iRegisterProducts) => {
-    register_products(data);
-    set_modal_add_products();
+  const submit = (data: IRegisterProducts) => {
+    registerProducts(data);
+    setModalAddProducts();
   };
 
   return (
+
     <Modal>
+
       <FormAdd onSubmit={handleSubmit(submit)}>
-        <div className="div_close_button">
+        <div className="divCloseButton">
           <button
             onClick={() => {
-              set_modal_add_products();
+              setModalAddProducts();
             }}
           >
             X
           </button>
         </div>
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CÓDIGO</label>
           <input
             placeholder="Insira o código do produto aqui"
@@ -64,12 +44,12 @@ const FormNewProducts = () => {
           />
         </div>
         {errors.code?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.code.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>DESCRIÇÃO</label>
           <input
             placeholder="Insira a descrição do produto aqui"
@@ -77,12 +57,12 @@ const FormNewProducts = () => {
           />
         </div>
         {errors.description?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.description.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CUSTO</label>
           <input
             placeholder="Insira o preço de custo do produto aqui"
@@ -90,12 +70,12 @@ const FormNewProducts = () => {
           />
         </div>
         {errors.cost?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.cost.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>PREÇO</label>
           <input
             placeholder="Insira o preço final do produto aqui"
@@ -103,12 +83,12 @@ const FormNewProducts = () => {
           />
         </div>
         {errors.price?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.price.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>MARGEM</label>
           <input
             placeholder="Insira a margem de contribuição aqui"
@@ -116,12 +96,12 @@ const FormNewProducts = () => {
           />
         </div>
         {errors.margin?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.margin.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>FORNECEDOR</label>
           <select {...register("supplier")}>
             <option value="">Selecione o fornecedor:</option>
@@ -132,14 +112,13 @@ const FormNewProducts = () => {
             })}
           </select>
         </div>
-
         {errors.supplier?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.supplier.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>ESTOQUE</label>
           <input
             placeholder="Insira a quantidade em estoque"
@@ -147,14 +126,16 @@ const FormNewProducts = () => {
           />
         </div>
         {errors.qty?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.qty.message}
           </p>
         )}
 
         <button type="submit">Save</button>
       </FormAdd>
+
     </Modal>
+    
   );
 };
 

@@ -1,32 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
-
-//testing
-interface iRegisterPeople {
-    id: number;
-    cpfCnpj: string;
-    nomeRazao: string;
-    apelidoFantasia: string;
-    tipo: string;
-    insEstadual: string;
-    insMunicipal: string;
-    cep: string;
-    rua: string;
-    numero: string;
-    complemento: string;
-    bairro: string;
-    cidade: string;
-    telefone: string;
-    celular: string;
-    email: string;
-    site: string;
-  }
+import IRegisterPeople from '../interfaces/people.interface';
+import { RegConfig } from "../contexts/regConfig";
+import { useContext } from "react";
 
 interface iPeopleProviderFunctions {
-    set_id_edit: (id: number) => void
-    register_people: (data: iRegisterPeople) => void
-    edit_people: (data: iRegisterPeople) => void
-    delete_people: (id: number) => void
-    peopleDatabase: iRegisterPeople[]
+    setIdEdit: (id: number) => void
+    registerPeople: (data: IRegisterPeople) => void
+    editPeople: (data: IRegisterPeople) => void
+    deletePeople: (id: number) => void
+    peopleDatabase: IRegisterPeople[]
     idToEdit: number
 }
 
@@ -35,15 +17,16 @@ interface iPeopleProviderProps {
 }
 
 export const PeopleContext = createContext<iPeopleProviderFunctions>({} as iPeopleProviderFunctions);
-
+ 
 export const PeopleProvider = ({children}: iPeopleProviderProps) => {
 
-    const createKey = () => Math.floor(Math.random() * 1029384756102201)
+    const { createKey } = useContext(RegConfig)
 
-    const [peopleDatabase, setPeopleDatabase] = useState([] as iRegisterPeople[])
+    const [peopleDatabase, setPeopleDatabase] = useState([] as IRegisterPeople[])
     const [idToEdit, setIdToEdit] = useState(0)
 
     useEffect(()=>{
+
         const checkPeopleData = localStorage.getItem("@project01_people_database")
 
         if (checkPeopleData) {
@@ -52,13 +35,13 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
 
     },[])
 
-    const set_id_edit = (id: number) => {
+    const setIdEdit = (id: number) => {
         setIdToEdit(id)
     }
 
-    const register_people = (data: iRegisterPeople) => {
+    const registerPeople = (data: IRegisterPeople) => {
         
-        const new_person = {
+        const newPerson = {
             id: createKey(),
             cpfCnpj: data.cpfCnpj,
             nomeRazao: data.nomeRazao,
@@ -78,16 +61,16 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
             site: data.site
         }
 
-        const newData = [...peopleDatabase, new_person]
+        const newData = [...peopleDatabase, newPerson]
         setPeopleDatabase(newData)
         localStorage.setItem("@project01_people_database", JSON.stringify(newData))
         return newData
 
     }
 
-    const edit_people = (data: iRegisterPeople) => {
+    const editPeople = (data: IRegisterPeople) => {
        
-        const editted_person = {
+        const edittedPerson = {
             id: idToEdit,
             cpfCnpj: data.cpfCnpj,
             nomeRazao: data.nomeRazao,
@@ -109,7 +92,7 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
 
         const newDatabase = peopleDatabase.map((person)=>{
             if (person.id === idToEdit) {
-                return editted_person
+                return edittedPerson
             } else {
                 return person
             }
@@ -121,7 +104,7 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
 
     }
 
-    const delete_people = (id: number) => {
+    const deletePeople = (id: number) => {
         const newDataBase = peopleDatabase.filter((person)=>{
             return person.id !== id
         })
@@ -130,14 +113,13 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
         setIdToEdit(0)
     }
 
-
     return(
 
         <PeopleContext.Provider value={{
-            set_id_edit,
-            register_people,
-            edit_people,
-            delete_people,
+            setIdEdit,
+            registerPeople,
+            editPeople,
+            deletePeople,
             peopleDatabase,
             idToEdit
         }}>

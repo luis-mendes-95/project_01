@@ -5,20 +5,20 @@ import { useContext } from "react"
 
 const DashProducts = () => {
 
-    const { productsDatabase, set_id_edit } = useContext(ProductsContext)
+    const { productsDatabase, setIdEdit } = useContext(ProductsContext)
 
-    const { set_modal_add_products, set_modal_edit_products } = useContext(ModalContext)
+    const { setModalAddProducts, setModalEditProducts } = useContext(ModalContext)
 
   return (
     <UlRegs>
 
-        <div className="div_title_ul_regs">
+        <div className="divTitleUlRegs">
             <h2>Products</h2>
         </div>
 
-        <div className="div_reg_data_item">
-            <h3 className="h3_reg_data_item">Name</h3>
-            <button className="button_add_new" onClick={()=>{set_modal_add_products()}}>+</button>
+        <div className="divRegDataItem">
+            <h3 className="h3RegDataItem">Name</h3>
+            <button className="buttonAddNew" onClick={()=>{setModalAddProducts()}}>+</button>
         </div>
 
         {productsDatabase.map((product) => {
@@ -26,8 +26,8 @@ const DashProducts = () => {
                 <li key={product.id}>
                     <p>{product.description}</p>
                     <button onClick={()=>{
-                        set_id_edit(product.id)
-                        set_modal_edit_products()
+                        setIdEdit(product.id)
+                        setModalEditProducts()
                         }}>More Details</button>
                 </li>
             )

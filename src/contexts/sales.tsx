@@ -1,31 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
-
-interface iItem {
-  id?: number;
-  code: number | null;
-  description: string;
-  price: number | null;
-  disccount: number | null;
-  qty: number | null;
-  obs?: string;
-}
-
-interface iRegisterSales {
-  id: number;
-  date: string;
-  client: string;
-  items: Array<iItem>;
-  total: number | null;
-  payType?: string;
-  received: number | null;
-}
+import { IRegisterSales } from '../interfaces/sales.interface';
+import { RegConfig } from "../contexts/regConfig";
+import { useContext } from "react";
 
 interface iSalesProviderFunctions {
-  register_sales: (data: iRegisterSales) => void;
-  edit_sales: (data: iRegisterSales) => void;
-  set_id_edit: (id: number) => void;
-  delete_sales: (id: number) => void;
-  salesDatabase: iRegisterSales[];
+  registerSales: (data: IRegisterSales) => void;
+  editSales: (data: IRegisterSales) => void;
+  setIdEdit: (id: number) => void;
+  deleteSales: (id: number) => void;
+  salesDatabase: IRegisterSales[];
   idToEdit: number;
 }
 
@@ -38,9 +21,10 @@ export const SalesContext = createContext<iSalesProviderFunctions>(
 );
 
 export const SalesProvider = ({ children }: iSalesProviderProps) => {
-  const createKey = () => Math.floor(Math.random() * 1029384756102201);
 
-  const [salesDatabase, setSalesDatabase] = useState([] as iRegisterSales[]);
+  const { createKey } = useContext(RegConfig)
+
+  const [salesDatabase, setSalesDatabase] = useState([] as IRegisterSales[]);
   const [idToEdit, setIdToEdit] = useState(0);
 
   useEffect(() => {
@@ -51,8 +35,8 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
     }
   }, []);
 
-  const register_sales = (data: iRegisterSales) => {
-    const new_sale = {
+  const registerSales = (data: IRegisterSales) => {
+    const newSale = {
       id: createKey(),
       date: data.date,
       client: data.client,
@@ -61,18 +45,18 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
       received: data.received,
     };
 
-    const newData = [...salesDatabase, new_sale];
+    const newData = [...salesDatabase, newSale];
     setSalesDatabase(newData);
     localStorage.setItem("@project01_sales_database", JSON.stringify(newData));
     return newData;
   };
 
-  const set_id_edit = (id: number) => {
+  const setIdEdit = (id: number) => {
     setIdToEdit(id);
   };
 
-  const edit_sales = (data: iRegisterSales) => {
-    const editted_sale = {
+  const editSales = (data: IRegisterSales) => {
+    const edittedSale = {
       id: idToEdit,
       date: data.date,
       client: data.client,
@@ -83,7 +67,7 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
 
     const newDatabase = salesDatabase.map((sale) => {
       if (sale.id === idToEdit) {
-        return editted_sale;
+        return edittedSale;
       } else {
         return sale;
       }
@@ -97,7 +81,7 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
     setIdToEdit(0);
   };
 
-  const delete_sales = (id: number) => {
+  const deleteSales = (id: number) => {
     const newDataBase = salesDatabase.filter((sale) => {
       return sale.id !== id;
     });
@@ -112,12 +96,12 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
   return (
     <SalesContext.Provider
       value={{
-        register_sales,
-        edit_sales,
-        delete_sales,
+        registerSales,
+        editSales,
+        deleteSales,
         salesDatabase,
         idToEdit,
-        set_id_edit,
+        setIdEdit,
       }}
     >
       {children}

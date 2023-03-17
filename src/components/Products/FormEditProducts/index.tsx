@@ -4,63 +4,46 @@ import { useContext } from "react";
 import { ModalContext } from "../../../contexts/modal";
 import { ProductsContext } from "../../../contexts/products";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PeopleContext } from "../../../contexts/people";
-
-interface iRegisterProducts {
-  id: number;
-  code: number;
-  description: string;
-  cost: number;
-  price: number;
-  margin: number;
-  supplier: string;
-  qty: number;
-}
+import IRegisterProducts from "../../../interfaces/products.interface";
+import ProductsSchema from "../../../schemas/products.schema";
 
 const FormEditProducts = () => {
-  const { set_modal_edit_products } = useContext(ModalContext);
-  const { productsDatabase, idToEdit, edit_products, delete_products } =
-    useContext(ProductsContext);
+
+  const { setModalEditProducts } = useContext(ModalContext);
+  const { productsDatabase, idToEdit, editProducts, deleteProducts } = useContext(ProductsContext);
   const { peopleDatabase } = useContext(PeopleContext);
 
-  const ProductsSchema = yup.object().shape({
-    description: yup.string().required("É necessário inserir uma descrição"),
-    price: yup.string().required("É necessário inserir o preço"),
-  });
+  const {register, handleSubmit, formState: { errors } } = useForm<IRegisterProducts>({ resolver: yupResolver(ProductsSchema) });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<iRegisterProducts>({ resolver: yupResolver(ProductsSchema) });
-
-  const productsToEdit = productsDatabase.filter(
-    (product: iRegisterProducts) => {
+  const productsToEdit = productsDatabase.filter((product: IRegisterProducts) => {
       return product.id === idToEdit;
     }
   );
 
-  const submit = (data: iRegisterProducts) => {
-    edit_products(data);
-    set_modal_edit_products();
+  const submit = (data: IRegisterProducts) => {
+    editProducts(data);
+    setModalEditProducts();
   };
 
   return (
+
     <Modal>
+
       <FormEdit onSubmit={handleSubmit(submit)}>
+
         <div>
           <button
             onClick={() => {
-              set_modal_edit_products();
+              setModalEditProducts();
             }}
           >
             X
           </button>
         </div>
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CÓDIGO</label>
           <input
             placeholder="Insira o código do produto aqui"
@@ -69,12 +52,12 @@ const FormEditProducts = () => {
           />
         </div>
         {errors.code?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.code.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>DESCRIÇÃO</label>
           <input
             placeholder="Insira a descrição do produto aqui"
@@ -83,12 +66,12 @@ const FormEditProducts = () => {
           />
         </div>
         {errors.description?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.description.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>CUSTO</label>
           <input
             placeholder="Insira o preço de custo do produto aqui"
@@ -97,12 +80,12 @@ const FormEditProducts = () => {
           />
         </div>
         {errors.cost?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.cost.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>PREÇO</label>
           <input
             placeholder="Insira o preço final do produto aqui"
@@ -111,12 +94,12 @@ const FormEditProducts = () => {
           />
         </div>
         {errors.price?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.price.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>MARGEM</label>
           <input
             placeholder="Insira a margem de contribuição aqui"
@@ -125,12 +108,12 @@ const FormEditProducts = () => {
           />
         </div>
         {errors.margin?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.margin.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>FORNECEDOR</label>
           <select {...register("supplier")}>
             <option value={productsToEdit[0].supplier}>
@@ -145,12 +128,12 @@ const FormEditProducts = () => {
         </div>
 
         {errors.supplier?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.supplier.message}
           </p>
         )}
 
-        <div className="div_label_and_input">
+        <div className="divLabelAndInput">
           <label>ESTOQUE</label>
           <input
             placeholder="Insira a quantidade em estoque"
@@ -159,7 +142,7 @@ const FormEditProducts = () => {
           />
         </div>
         {errors.qty?.message && (
-          <p className="p_error" aria-label="error">
+          <p className="pError" aria-label="error">
             {errors.qty.message}
           </p>
         )}
@@ -167,14 +150,17 @@ const FormEditProducts = () => {
         <button type="submit">Save</button>
         <button
           onClick={() => {
-            set_modal_edit_products();
-            delete_products(idToEdit);
+            setModalEditProducts();
+            deleteProducts(idToEdit);
           }}
         >
           Delete
         </button>
+        
       </FormEdit>
+
     </Modal>
+
   );
 };
 
