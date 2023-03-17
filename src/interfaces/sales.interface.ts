@@ -13,9 +13,9 @@ export interface IRegisterSales {
   date: string;
   client: string;
   items: Array<IItem>;
-  total: number | null;
+  total: number;
   payType?: string;
-  received: number | null;
+  received: number;
 }
 
 export interface iItemPrice {
