@@ -6,7 +6,7 @@ export interface IItemOS {
     workDescription: string;
   }
   
-  export interface IRegisterOrderService {
+  export interface IRegisterServiceOrder {
     id: number;
     date: string;
     client: string;
@@ -17,4 +17,4 @@ export interface IItemOS {
     price: number;
   }
   
-  export type FormValues = IRegisterOrderService;
+  export type FormValues = IRegisterServiceOrder;

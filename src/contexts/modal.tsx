@@ -1,18 +1,29 @@
 import React, { createContext, useState } from "react";
 
 interface iModalProviderFunctions {
+
   showModalAddPeople: boolean;
-  showModalEditPeople: boolean;
-  showModalAddProducts: boolean;
-  showModalEditProducts: boolean;
-  setModalAddPeople: () => void;
-  setModalEditPeople: () => void;
-  setModalAddProducts: () => void;
-  setModalEditProducts: () => void;
   showModalAddSales: boolean;
+  showModalAddProducts: boolean;
+  showModalAddServiceOrder: boolean;
+
+  showModalEditPeople: boolean;
   showModalEditSales: boolean;
+  showModalEditProducts: boolean;
+  showModalEditServiceOrder: boolean;
+  
+  setModalAddPeople: () => void;
   setModalAddSale: () => void;
+  setModalAddProducts: () => void;
+
+
+  setModalEditPeople: () => void;
   setModalEditSale: () => void;
+  setModalEditProducts: () => void;
+
+  setModalAddServiceOrder: () => void;
+  setModalEditServiceOrder: () => void;
+
 }
 
 interface iModalProviderProps {
@@ -31,6 +42,8 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
   const [showModalEditProducts, setShowModalEditProducts] = useState(false);
   const [showModalAddSales, setShowModalAddSales] = useState(false);
   const [showModalEditSales, setShowModalEditSales] = useState(false);
+  const [showModalAddServiceOrder, setShowModalAddServiceOrder] = useState(false);
+  const [showModalEditServiceOrder, setShowModalEditServiceOrder] = useState(false);
 
   const setModalAddPeople = () => {
     setShowModalAddPeople(!showModalAddPeople);
@@ -56,6 +69,15 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
     setShowModalEditSales(!showModalEditSales);
   };
 
+
+  const setModalAddServiceOrder = () => {
+    setShowModalAddServiceOrder(!showModalAddServiceOrder);
+  };
+
+  const setModalEditServiceOrder = () => {
+    setShowModalEditServiceOrder(!showModalEditServiceOrder);
+  };
+
   return (
     <ModalContext.Provider
       value={{
@@ -63,14 +85,18 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         showModalEditPeople,
         showModalAddProducts,
         showModalEditProducts,
+        showModalAddSales,
+        showModalEditSales,
+        showModalAddServiceOrder,
+        showModalEditServiceOrder,
         setModalAddPeople,
         setModalEditPeople,
         setModalAddProducts,
         setModalEditProducts,
-        showModalAddSales,
-        showModalEditSales,
         setModalAddSale,
-        setModalEditSale
+        setModalEditSale,
+        setModalAddServiceOrder,
+        setModalEditServiceOrder
       }}
     >
       {children}

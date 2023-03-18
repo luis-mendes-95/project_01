@@ -1,12 +1,12 @@
 import { UlRegs } from "../../../styles/main";
 import { ModalContext } from "../../../contexts/modal";
 import { useContext } from "react";
-import { ServiceOrdersContext } from "../../../contexts/serviceOrders";
+import { ServiceOrderContext } from "../../../contexts/serviceOrders";
 
 const DashServiceOrders = () => {
 
     const { setModalAddServiceOrder, setModalEditServiceOrder } = useContext(ModalContext);
-    const { serviceOrderDatabase, setIdEdit } = useContext(ServiceOrdersContext)
+    const { serviceOrdersDatabase, setIdEdit } = useContext(ServiceOrderContext)
   
     return (
   
@@ -30,7 +30,7 @@ const DashServiceOrders = () => {
           </button>
         </div>
   
-        {serviceOrderDatabase.map((serviceOrder) => {
+        {serviceOrdersDatabase.map((serviceOrder) => {
           return (
             <li key={serviceOrder.id}>
               <p>{serviceOrder.client}</p>

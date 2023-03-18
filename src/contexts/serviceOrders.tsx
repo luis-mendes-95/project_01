@@ -3,51 +3,49 @@ import { IRegisterServiceOrder } from '../interfaces/serviceOrder.interface';
 import { RegConfig } from "../contexts/regConfig";
 import { useContext } from "react";
 
-interface iSalesProviderFunctions {
-  registerSales: (data: IRegisterSales) => void;
-  editSales: (data: IRegisterSales) => void;
+interface IServiceOrderProviderFunctions {
+  registerServiceOrder: (data: IRegisterServiceOrder) => void;
+  editServiceOrder: (data: IRegisterServiceOrder) => void;
   setIdEdit: (id: number) => void;
-  deleteSales: (id: number) => void;
-  salesDatabase: IRegisterSales[];
+  deleteServiceOrder: (id: number) => void;
+  serviceOrdersDatabase: IRegisterServiceOrder[];
   idToEdit: number;
 }
 
-interface iSalesProviderProps {
+interface IServiceOrderProps {
   children: React.ReactNode;
 }
 
-export const SalesContext = createContext<iSalesProviderFunctions>(
-  {} as iSalesProviderFunctions
+export const ServiceOrderContext = createContext<IServiceOrderProviderFunctions>(
+  {} as IServiceOrderProviderFunctions
 );
 
-export const SalesProvider = ({ children }: iSalesProviderProps) => {
+export const ServiceOrderProvider = ({ children }: IServiceOrderProps) => {
 
   const { createKey } = useContext(RegConfig)
 
-  const [salesDatabase, setSalesDatabase] = useState([] as IRegisterSales[]);
+  const [serviceOrdersDatabase, setServiceOrdersDatabase] = useState([] as IRegisterServiceOrder[]);
   const [idToEdit, setIdToEdit] = useState(0);
 
   useEffect(() => {
-    const checkSalesData = localStorage.getItem("@project01_sales_database");
+    const checkServiceOrderData = localStorage.getItem("@project01_service_orders_database");
 
-    if (checkSalesData) {
-      setSalesDatabase(JSON.parse(checkSalesData));
+    if (checkServiceOrderData) {
+      setServiceOrdersDatabase(JSON.parse(checkServiceOrderData));
     }
   }, []);
 
-  const registerSales = (data: IRegisterSales) => {
-    const newSale = {
+  const registerServiceOrder = (data: IRegisterServiceOrder) => {
+    const newServiceOrder = {
       id: createKey(),
       date: data.date,
       client: data.client,
       items: data.items,
-      total: data.total,
-      received: data.received,
     };
 
-    const newData = [...salesDatabase, newSale];
-    setSalesDatabase(newData);
-    localStorage.setItem("@project01_sales_database", JSON.stringify(newData));
+    const newData = [...serviceOrdersDatabase, newServiceOrder];
+    setServiceOrdersDatabase(newData);
+    localStorage.setItem("@project01_service_orders_database", JSON.stringify(newData));
     return newData;
   };
 
@@ -55,56 +53,54 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
     setIdToEdit(id);
   };
 
-  const editSales = (data: IRegisterSales) => {
-    const edittedSale = {
+  const editServiceOrder = (data: IRegisterServiceOrder) => {
+    const edittedServiceOrder = {
       id: idToEdit,
       date: data.date,
       client: data.client,
-      items: data.items,
-      total: data.total,
-      received: data.received,
+      items: data.items
     };
 
-    const newDatabase = salesDatabase.map((sale) => {
-      if (sale.id === idToEdit) {
-        return edittedSale;
+    const newDatabase = serviceOrdersDatabase.map((serviceOrder) => {
+      if (serviceOrder.id === idToEdit) {
+        return edittedServiceOrder;
       } else {
-        return sale;
+        return serviceOrder;
       }
     });
 
-    setSalesDatabase(newDatabase);
+    setServiceOrdersDatabase(newDatabase);
     localStorage.setItem(
-      "@project01_sales_database",
+      "@project01_service_orders_database",
       JSON.stringify(newDatabase)
     );
     setIdToEdit(0);
   };
 
-  const deleteSales = (id: number) => {
-    const newDataBase = salesDatabase.filter((sale) => {
-      return sale.id !== id;
+  const deleteServiceOrder = (id: number) => {
+    const newDataBase = serviceOrdersDatabase.filter((serviceOrder) => {
+      return serviceOrder.id !== id;
     });
-    setSalesDatabase(newDataBase);
+    setServiceOrdersDatabase(newDataBase);
     localStorage.setItem(
-      "@project01_sales_database",
+      "@project01_service_orders_database",
       JSON.stringify(newDataBase)
     );
     setIdToEdit(0);
   };
 
   return (
-    <SalesContext.Provider
+    <ServiceOrderContext.Provider
       value={{
-        registerSales,
-        editSales,
-        deleteSales,
-        salesDatabase,
+        registerServiceOrder,
+        editServiceOrder,
+        deleteServiceOrder,
+        serviceOrdersDatabase,
         idToEdit,
         setIdEdit,
       }}
     >
       {children}
-    </SalesContext.Provider>
+    </ServiceOrderContext.Provider>
   );
 };
