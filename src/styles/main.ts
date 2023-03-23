@@ -88,6 +88,10 @@ export const FormAdd = styled.form`
     width: 50%;
   }
 
+  textarea {
+    height: 200px;
+  }
+
   .divFormFields {
     width: 80%;
     display: flex;
