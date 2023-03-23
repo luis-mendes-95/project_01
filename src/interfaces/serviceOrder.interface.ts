@@ -11,6 +11,7 @@ export interface IItemOS {
     date: string;
     client: string;
     items: Array<IItemOS>;
+    saleId?: number;
   }
   
   export interface iItemPrice {

@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { IRegisterSales } from '../interfaces/sales.interface';
 import { RegConfig } from "../contexts/regConfig";
 import { useContext } from "react";
+import currency from "currency.js"; //importação da biblioteca currency
 
 interface iSalesProviderFunctions {
   registerSales: (data: IRegisterSales) => void;
@@ -93,6 +94,7 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
     setIdToEdit(0);
   };
 
+
   return (
     <SalesContext.Provider
       value={{
@@ -101,10 +103,12 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
         deleteSales,
         salesDatabase,
         idToEdit,
-        setIdEdit,
+        setIdEdit
       }}
     >
       {children}
     </SalesContext.Provider>
   );
 };
+
+

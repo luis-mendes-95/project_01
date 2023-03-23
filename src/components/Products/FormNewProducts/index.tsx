@@ -64,7 +64,7 @@ const FormNewProducts = () => {
 
         <div className="divLabelAndInput">
           <label>CUSTO</label>
-          <input
+          <input type="text"
             placeholder="Insira o preço de custo do produto aqui"
             {...register("cost")}
           />

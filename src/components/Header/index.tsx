@@ -12,6 +12,7 @@ const Header = () => {
         <button onClick={()=>{navigate("/productspage")}}>Products</button>
         <button onClick={()=>{navigate("/salespage")}}>Sales</button>
         <button onClick={()=>{navigate("/serviceorderspage")}}>Service Orders</button>
+        <button onClick={()=>{navigate("/receivables")}}>Receivables</button>
     </HeaderApp>
   )
 }
