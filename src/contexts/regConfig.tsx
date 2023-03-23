@@ -1,11 +1,8 @@
-import currency from "currency.js";
 import React, { createContext } from "react";
 
 interface IRegConfigProviderFunctions {
   createKey: () => number;
   getDate: () => string;
-  formatCurrency: (value: any) => void; // função acoplada à biblioteca currency
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void; // função também acoplada à outra função criada para manejar a currency lib
 }
 
 interface IRegConfigProviderProps {
@@ -98,29 +95,11 @@ export const RegConfigProvider = ({ children }: IRegConfigProviderProps) => {
     return complete_date;
   };
 
-  const formatCurrency = (value: any): any => {
-
-    return value.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    });
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => { //função também acoplada à biblioteca currency para formatar o valor do input para moeda BRL
-    const value = event.target.value
-    // .replace(".", "");
-    const formattedValue = formatCurrency(Number(value));
-    event.target.value = formattedValue;
-  };
-
-
   return (
     <RegConfig.Provider
       value={{
         createKey,
-        getDate,
-        formatCurrency,
-        handleInputChange
+        getDate
       }}
     >
       {children}

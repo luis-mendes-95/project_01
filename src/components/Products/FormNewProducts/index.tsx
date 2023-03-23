@@ -8,14 +8,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PeopleContext } from "../../../contexts/people";
 import IRegisterProducts from '../../../interfaces/products.interface'
 import ProductsSchema from "../../../schemas/products.schema";
-import { RegConfig } from "../../../contexts/regConfig";
-
 
 const FormNewProducts = () => {
   const { registerProducts } = useContext(ProductsContext);
   const { peopleDatabase } = useContext(PeopleContext);
   const { setModalAddProducts } = useContext(ModalContext);
-  const { formatCurrency, handleInputChange } = useContext(RegConfig);
 
   const { register, handleSubmit, formState: { errors }} = useForm<IRegisterProducts>({resolver: yupResolver(ProductsSchema)});
 
@@ -67,7 +64,7 @@ const FormNewProducts = () => {
 
         <div className="divLabelAndInput">
           <label>CUSTO</label>
-          <input type="text" onInput={handleInputChange}
+          <input type="text"
             placeholder="Insira o preço de custo do produto aqui"
             {...register("cost")}
           />
