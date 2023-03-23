@@ -1,7 +1,7 @@
 import Modal from "../../Modal";
 import { ModalContext } from "../../../contexts/modal";
 import { PeopleContext } from "../../../contexts/people";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FormAdd } from "../../../styles/main";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,6 +15,24 @@ const FormNewPeople = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IRegisterPeople>({resolver: yupResolver(PeopleSchema)});
 
   const { setModalAddPeople } = useContext(ModalContext);
+
+  const [cpfCnpj, setCpfCnpj] = useState('');
+
+  const handleCpfCnpjChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    
+    let inputValue = e.currentTarget.value.replace(/\D/g, '');
+
+    if (inputValue.length === 14) {
+      inputValue = inputValue.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+    } else if (inputValue.length === 11) {
+      inputValue = inputValue.replace(/(\d{3})(\d)/, '$1.$2');
+      inputValue = inputValue.replace(/(\d{3})(\d)/, '$1.$2');
+      inputValue = inputValue.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+  
+    setCpfCnpj(inputValue);
+
+  }
 
   const submit = (data: IRegisterPeople) => {
     registerPeople(data);
@@ -39,7 +57,9 @@ const FormNewPeople = () => {
 
         <div className="divLabelAndInput">
           <label>CPF/CNPJ</label>
-          <input
+          <input 
+            onInput={handleCpfCnpjChange}
+            value={cpfCnpj}
             placeholder="Insira o cpf ou cnpj aqui"
             {...register("cpfCnpj")}
           />
