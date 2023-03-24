@@ -45,11 +45,11 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
         const newProduct = {
             id: createKey(),
             code: data.code,
-            description: data.description,
+            description: data.description.toUpperCase(),
             cost: data.cost,
             price: data.price,
             margin: data.margin,
-            supplier: data.supplier,
+            supplier: data.supplier.toUpperCase(),
             qty: data.qty
         }
 
@@ -66,11 +66,11 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
         const edittedProduct = {
             id: idToEdit,
             code: data.code,
-            description: data.description,
+            description: data.description.toUpperCase(),
             cost: data.cost,
             price: data.price,
             margin: data.margin,
-            supplier: data.supplier,
+            supplier: data.supplier.toUpperCase(),
             qty: data.qty
         }
 
