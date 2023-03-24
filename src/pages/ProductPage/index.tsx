@@ -4,6 +4,7 @@ import { ModalContext } from "../../contexts/modal";
 import { useContext } from "react";
 import FormNewProducts from "../../components/Products/FormNewProducts";
 import FormEditProducts from "../../components/Products/FormEditProducts";
+import { ToastContainer } from 'react-toastify';
 
 const ProductsPage = () => {
   const { showModalAddProducts, showModalEditProducts } = useContext(ModalContext);
@@ -16,6 +17,7 @@ const ProductsPage = () => {
 
       <Header />
       <div>This page will visualize and register all kinds of Products</div>
+      <ToastContainer/>
       <DashProducts />
     </>
   );

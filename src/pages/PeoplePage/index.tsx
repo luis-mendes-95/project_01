@@ -4,6 +4,7 @@ import { ModalContext } from "../../contexts/modal";
 import { useContext } from "react";
 import FormNewPeople from "../../components/People/FormNewPeople";
 import FormEditPeople from "../../components/People/FormEditPeople";
+import { ToastContainer } from 'react-toastify';
 
 
 const PeoplePage = () => {
@@ -18,6 +19,7 @@ const PeoplePage = () => {
 
       <Header />
       <div>This page will visualize and register all kinds of People</div>
+      <ToastContainer/>
       <DashPeople />
     </>
   );

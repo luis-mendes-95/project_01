@@ -8,15 +8,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PeopleContext } from "../../../contexts/people";
 import IRegisterProducts from '../../../interfaces/products.interface'
 import ProductsSchema from "../../../schemas/products.schema";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FormNewProducts = () => {
-  const { registerProducts } = useContext(ProductsContext);
+  const { registerProducts, productsDatabase } = useContext(ProductsContext);
   const { peopleDatabase } = useContext(PeopleContext);
   const { setModalAddProducts } = useContext(ModalContext);
 
   const { register, handleSubmit, formState: { errors }} = useForm<IRegisterProducts>({resolver: yupResolver(ProductsSchema)});
 
   const submit = (data: IRegisterProducts) => {
+
+    const checkCodeExistence = productsDatabase.filter(product => product.code === data.code)
+
+    if (checkCodeExistence.length > 0) {
+      return toast.error("CÓDIGO DE PRODUTO DUPLICADO")
+    }
+
     registerProducts(data);
     setModalAddProducts();
   };

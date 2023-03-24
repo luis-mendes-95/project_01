@@ -4,6 +4,7 @@ import { useContext } from "react";
 import FormNewServiceOrder from "../../components/ServiceOrders/FormNewServiceOrder";
 import DashServiceOrder from "../../components/ServiceOrders/DashServiceOrders";
 import FormEditServiceOrder from "../../components/ServiceOrders/FormEditServiceOrder";
+import { ToastContainer } from 'react-toastify';
 
 const ServiceOrderPage = () => {
 
@@ -17,6 +18,7 @@ const ServiceOrderPage = () => {
 
       <Header />
       <div>This page will visualize and register all service orders</div>
+      <ToastContainer/>
       <DashServiceOrder />
     </>
   );
