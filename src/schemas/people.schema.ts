@@ -13,6 +13,7 @@ const PeopleSchema = yup.object().shape({
     complemento: yup.string(),
     bairro: yup.string(),
     cidade: yup.string(),
+    estado: yup.string(),
     telefone: yup.string(),
     celular: yup.string(),
     email: yup.string(),

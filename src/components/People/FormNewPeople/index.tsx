@@ -18,6 +18,8 @@ const FormNewPeople = () => {
 
   const [cpfCnpj, setCpfCnpj] = useState('');
   const [cep, setCep] = useState('');
+  const [cellPhone, setCellPhone] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleCpfCnpjChange = (e: React.FormEvent<HTMLInputElement>): void => {
     
@@ -44,6 +46,34 @@ const FormNewPeople = () => {
     }
   
     setCep(inputValue);
+
+  }
+
+  const handleCellPhoneChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    
+    let inputValue = e.currentTarget.value.replace(/\D/g, '');
+
+    if (inputValue.length === 11) {
+      inputValue = inputValue.replace(/^(\d{2})(\d{1})(\d{4})(\d{4})$/, '($1) $2 $3-$4');
+    } else {
+      inputValue = inputValue.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+    }
+  
+    setCellPhone(inputValue);
+
+  }
+
+  const handlePhoneChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    
+    let inputValue = e.currentTarget.value.replace(/\D/g, '');
+
+    if (inputValue.length === 11) {
+      inputValue = inputValue.replace(/^(\d{2})(\d{1})(\d{4})(\d{4})$/, '($1) $2 $3-$4');
+    } else {
+      inputValue = inputValue.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+    }
+  
+    setPhone(inputValue);
 
   }
 
@@ -154,6 +184,7 @@ const FormNewPeople = () => {
         <div className="divLabelAndInput">
           <label>CEP</label>
           <input
+            maxLength={9}
             value={cep}
             onInput={handleCepChange}
             placeholder="Insira o CEP aqui"
@@ -232,8 +263,25 @@ const FormNewPeople = () => {
         )}
 
         <div className="divLabelAndInput">
+          <label>ESTADO</label>
+          <input
+            maxLength={2}
+            placeholder="Insira a cidade aqui"
+            {...register("estado")}
+          />
+        </div>
+        {errors.estado?.message && (
+          <p className="pError" aria-label="error">
+            {errors.estado.message}
+          </p>
+        )}
+
+        <div className="divLabelAndInput">
           <label>TELEFONE</label>
           <input
+            maxLength={16}
+            value={phone}
+            onInput={handlePhoneChange}
             placeholder="Insira o telefone aqui"
             {...register("telefone")}
           />
@@ -247,6 +295,9 @@ const FormNewPeople = () => {
         <div className="divLabelAndInput">
           <label>CELULAR</label>
           <input
+            maxLength={16}
+            value={cellPhone}
+            onInput={handleCellPhoneChange}
             placeholder="Insira o celular aqui"
             {...register("celular")}
           />
