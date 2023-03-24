@@ -17,6 +17,7 @@ const FormNewPeople = () => {
   const { setModalAddPeople } = useContext(ModalContext);
 
   const [cpfCnpj, setCpfCnpj] = useState('');
+  const [cep, setCep] = useState('');
 
   const handleCpfCnpjChange = (e: React.FormEvent<HTMLInputElement>): void => {
     
@@ -31,6 +32,18 @@ const FormNewPeople = () => {
     }
   
     setCpfCnpj(inputValue);
+
+  }
+
+  const handleCepChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    
+    let inputValue = e.currentTarget.value.replace(/\D/g, '');
+
+    if (inputValue.length === 8) {
+      inputValue = inputValue.replace(/^(\d{5})(\d{3})$/, '$1-$2');
+    }
+  
+    setCep(inputValue);
 
   }
 
@@ -58,6 +71,7 @@ const FormNewPeople = () => {
         <div className="divLabelAndInput">
           <label>CPF/CNPJ</label>
           <input 
+            maxLength={18}
             onInput={handleCpfCnpjChange}
             value={cpfCnpj}
             placeholder="Insira o cpf ou cnpj aqui"
@@ -140,6 +154,8 @@ const FormNewPeople = () => {
         <div className="divLabelAndInput">
           <label>CEP</label>
           <input
+            value={cep}
+            onInput={handleCepChange}
             placeholder="Insira o CEP aqui"
             {...register("cep")}
           />
