@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect } from "react";
 import IRegisterPeople from '../interfaces/people.interface';
 import { RegConfig } from "../contexts/regConfig";
 import { useContext } from "react";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface iPeopleProviderFunctions {
     setIdEdit: (id: number) => void
@@ -65,6 +67,7 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
         const newData = [...peopleDatabase, newPerson]
         setPeopleDatabase(newData)
         localStorage.setItem("@project01_people_database", JSON.stringify(newData))
+        toast.success('CADASTRO EFETUADO')
         return newData
 
     }
@@ -101,6 +104,7 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
         })
 
         setPeopleDatabase(newDatabase)
+        toast.success('CADASTRO EDITADO')
         localStorage.setItem("@project01_people_database", JSON.stringify(newDatabase))
         setIdToEdit(0)
 
@@ -112,6 +116,7 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
         })
         setPeopleDatabase(newDataBase)
         localStorage.setItem("@project01_people_database", JSON.stringify(newDataBase))
+        toast.success('CADASTRO DELETADO')
         setIdToEdit(0)
     }
 

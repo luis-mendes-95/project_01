@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect } from "react";
 import IRegisterProducts from '../interfaces/products.interface';
 import { RegConfig } from "../contexts/regConfig";
 import { useContext } from "react";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface iProductsProviderFunctions {
     setIdEdit: (id: number) => void
@@ -54,6 +56,7 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
         const newData = [...productsDatabase, newProduct]
         setProductsDatabase(newData)
         localStorage.setItem("@project01_products_database", JSON.stringify(newData))
+        toast.success("PRODUTO CADASTRADO")
         return newData
 
     }
@@ -81,6 +84,7 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
 
         setProductsDatabase(newDatabase)
         localStorage.setItem("@project01_products_database", JSON.stringify(newDatabase))
+        toast.success("PRODUTO EDITADO")
         setIdToEdit(0)
 
     }
@@ -91,6 +95,7 @@ export const ProductsProvider = ({children}: iProductsProviderProps) => {
         })
         setProductsDatabase(newDataBase)
         localStorage.setItem("@project01_products_database", JSON.stringify(newDataBase))
+        toast.success("PRODUTO DELETADO")
         setIdToEdit(0)
     }
 

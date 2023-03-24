@@ -4,6 +4,7 @@ import { useContext } from "react";
 import FormNewSales from "../../components/Sales/FormNewSale";
 import DashSales from "../../components/Sales/DashSales";
 import FormEditSale from "../../components/Sales/FormEditSales";
+import { ToastContainer } from 'react-toastify';
 
 const SalesPage = () => {
 
@@ -17,6 +18,7 @@ const SalesPage = () => {
 
       <Header />
       <div>This page will visualize and register all sales</div>
+      <ToastContainer/>
       <DashSales />
     </>
   );
