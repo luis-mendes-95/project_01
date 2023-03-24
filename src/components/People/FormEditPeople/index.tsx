@@ -1,6 +1,6 @@
 import { FormEdit } from "../../../styles/main";
 import Modal from "../../Modal";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ModalContext } from "../../../contexts/modal";
 import { PeopleContext } from "../../../contexts/people";
 import { useForm } from "react-hook-form";
@@ -9,15 +9,83 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import PeopleSchema from "../../../schemas/people.schema";
 
 const FormEditPeople = () => {
-
   const { setModalEditPeople } = useContext(ModalContext);
-  const { peopleDatabase, idToEdit, editPeople, deletePeople } = useContext(PeopleContext);
+  const { peopleDatabase, idToEdit, editPeople, deletePeople } =
+    useContext(PeopleContext);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<IRegisterPeople>({ resolver: yupResolver(PeopleSchema) });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IRegisterPeople>({ resolver: yupResolver(PeopleSchema) });
 
   const peopleToEdit = peopleDatabase.filter((person) => {
     return person.id === idToEdit;
   });
+
+  const [cpfCnpj, setCpfCnpj] = useState(peopleToEdit[0].cpfCnpj);
+  const [cep, setCep] = useState(peopleToEdit[0].cep);
+  const [cellPhone, setCellPhone] = useState(peopleToEdit[0].celular);
+  const [phone, setPhone] = useState(peopleToEdit[0].telefone);
+
+  const handleCpfCnpjChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 14) {
+      inputValue = inputValue.replace(
+        /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+        "$1.$2.$3/$4-$5"
+      );
+    } else if (inputValue.length === 11) {
+      inputValue = inputValue.replace(/(\d{3})(\d)/, "$1.$2");
+      inputValue = inputValue.replace(/(\d{3})(\d)/, "$1.$2");
+      inputValue = inputValue.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    }
+
+    setCpfCnpj(inputValue);
+  };
+
+  const handleCepChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 8) {
+      inputValue = inputValue.replace(/^(\d{5})(\d{3})$/, "$1-$2");
+    }
+
+    setCep(inputValue);
+  };
+
+  const handleCellPhoneChange = (
+    e: React.FormEvent<HTMLInputElement>
+  ): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 11) {
+      inputValue = inputValue.replace(
+        /^(\d{2})(\d{1})(\d{4})(\d{4})$/,
+        "($1) $2 $3-$4"
+      );
+    } else {
+      inputValue = inputValue.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+    }
+
+    setCellPhone(inputValue);
+  };
+
+  const handlePhoneChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 11) {
+      inputValue = inputValue.replace(
+        /^(\d{2})(\d{1})(\d{4})(\d{4})$/,
+        "($1) $2 $3-$4"
+      );
+    } else {
+      inputValue = inputValue.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+    }
+
+    setPhone(inputValue);
+  };
 
   const submit = (data: IRegisterPeople) => {
     editPeople(data);
@@ -25,18 +93,24 @@ const FormEditPeople = () => {
   };
 
   return (
-
     <Modal>
-
       <FormEdit onSubmit={handleSubmit(submit)}>
-
         <div>
-          <button onClick={()=>{setModalEditPeople();}}>X</button>
+          <button
+            onClick={() => {
+              setModalEditPeople();
+            }}
+          >
+            X
+          </button>
         </div>
 
         <div className="divLabelAndInput">
           <label>CPF/CNPJ</label>
           <input
+            maxLength={18}
+            onInput={handleCpfCnpjChange}
+            value={cpfCnpj}
             placeholder="Insira o cpf ou cnpj aqui"
             defaultValue={peopleToEdit[0].cpfCnpj}
             {...register("cpfCnpj")}
@@ -140,6 +214,9 @@ const FormEditPeople = () => {
         <div className="divLabelAndInput">
           <label>CEP</label>
           <input
+            maxLength={9}
+            value={cep}
+            onInput={handleCepChange}
             placeholder="Insira o CEP aqui"
             defaultValue={peopleToEdit[0].cep}
             {...register("cep")}
@@ -222,8 +299,25 @@ const FormEditPeople = () => {
         )}
 
         <div className="divLabelAndInput">
+          <label>ESTADO</label>
+          <input
+            maxLength={2}
+            placeholder="Insira a cidade aqui"
+            {...register("estado")}
+          />
+        </div>
+        {errors.estado?.message && (
+          <p className="pError" aria-label="error">
+            {errors.estado.message}
+          </p>
+        )}
+
+        <div className="divLabelAndInput">
           <label>TELEFONE</label>
           <input
+            maxLength={16}
+            value={phone}
+            onInput={handlePhoneChange}
             placeholder="Insira o telefone aqui"
             defaultValue={peopleToEdit[0].telefone}
             {...register("telefone")}
@@ -238,6 +332,9 @@ const FormEditPeople = () => {
         <div className="divLabelAndInput">
           <label>CELULAR</label>
           <input
+            maxLength={16}
+            value={cellPhone}
+            onInput={handleCellPhoneChange}
             placeholder="Insira o celular aqui"
             defaultValue={peopleToEdit[0].celular}
             {...register("celular")}
@@ -279,16 +376,15 @@ const FormEditPeople = () => {
 
         <button type="submit">Save</button>
 
-        <button onClick={() => {
+        <button
+          onClick={() => {
             setModalEditPeople();
             deletePeople(idToEdit);
           }}
         >
           Delete
         </button>
-
       </FormEdit>
-      
     </Modal>
   );
 };

@@ -44,22 +44,22 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
         const newPerson = {
             id: createKey(),
             cpfCnpj: data.cpfCnpj,
-            nomeRazao: data.nomeRazao,
-            apelidoFantasia: data.apelidoFantasia,
-            tipo: data.tipo,
+            nomeRazao: data.nomeRazao.toUpperCase(),
+            apelidoFantasia: data.apelidoFantasia.toUpperCase(),
+            tipo: data.tipo.toUpperCase(),
             insEstadual: data.insEstadual,
             insMunicipal: data.insMunicipal,
             cep: data.cep,
-            rua: data.rua,
+            rua: data.rua.toUpperCase(),
             numero: data.numero,
-            complemento: data.complemento,
-            bairro: data.bairro,
-            cidade: data.cidade,
-            estado: data.estado,
+            complemento: data.complemento.toUpperCase(),
+            bairro: data.bairro.toUpperCase(),
+            cidade: data.cidade.toUpperCase(),
+            estado: data.estado.toUpperCase(),
             telefone: data.telefone,
             celular: data.celular,
-            email: data.email,
-            site: data.site
+            email: data.email.toUpperCase(),
+            site: data.site.toUpperCase()
         }
 
         const newData = [...peopleDatabase, newPerson]
@@ -74,22 +74,22 @@ export const PeopleProvider = ({children}: iPeopleProviderProps) => {
         const edittedPerson = {
             id: idToEdit,
             cpfCnpj: data.cpfCnpj,
-            nomeRazao: data.nomeRazao,
-            apelidoFantasia: data.apelidoFantasia,
-            tipo: data.tipo,
+            nomeRazao: data.nomeRazao.toUpperCase(),
+            apelidoFantasia: data.apelidoFantasia.toUpperCase(),
+            tipo: data.tipo.toUpperCase(),
             insEstadual: data.insEstadual,
             insMunicipal: data.insMunicipal,
             cep: data.cep,
-            rua: data.rua,
+            rua: data.rua.toUpperCase(),
             numero: data.numero,
-            complemento: data.complemento,
-            bairro: data.bairro,
-            cidade: data.cidade,
-            estado: data.estado,
+            complemento: data.complemento.toUpperCase(),
+            bairro: data.bairro.toUpperCase(),
+            cidade: data.cidade.toUpperCase(),
+            estado: data.estado.toUpperCase(),
             telefone: data.telefone,
             celular: data.celular,
-            email: data.email,
-            site: data.site
+            email: data.email.toUpperCase(),
+            site: data.site.toUpperCase()
         }
 
         const newDatabase = peopleDatabase.map((person)=>{
