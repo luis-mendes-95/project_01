@@ -16,7 +16,6 @@ const ProductsPage = () => {
       {showModalEditProducts === true ? <FormEditProducts /> : null}
 
       <Header />
-      <div>This page will visualize and register all kinds of Products</div>
       <ToastContainer/>
       <DashProducts />
     </>

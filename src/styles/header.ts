@@ -13,6 +13,8 @@ export const HeaderApp = styled.header`
   padding: 20px;
   background-color: ${blue};
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+  gap: 5px;
 
   @media (max-width: 768px) {
     flex-direction: column;

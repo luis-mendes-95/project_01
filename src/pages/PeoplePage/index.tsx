@@ -18,7 +18,6 @@ const PeoplePage = () => {
       {showModalEditPeople === true ? <FormEditPeople /> : null}
 
       <Header />
-      <div>This page will visualize and register all kinds of People</div>
       <ToastContainer/>
       <DashPeople />
     </>

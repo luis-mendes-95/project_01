@@ -100,6 +100,9 @@ const FormEditProducts = () => {
     ) {
       editProducts(data);
       setModalEditProducts();
+    } else if (checkCodeExistence.length === 0) {
+      editProducts(data);
+      setModalEditProducts();
     } else {
       return toast.error("CÓDIGO DE PRODUTO DUPLICADO");
     }

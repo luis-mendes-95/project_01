@@ -5,6 +5,8 @@ export interface IItem {
   price: number | null;
   disccount: number | null;
   qty: number | null;
+  cost: number | null;
+  margin: number | null;
   obs?: string;
 }
 

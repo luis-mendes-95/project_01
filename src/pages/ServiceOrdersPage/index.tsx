@@ -17,7 +17,6 @@ const ServiceOrderPage = () => {
       {showModalEditServiceOrder === true ? <FormEditServiceOrder /> : null}
 
       <Header />
-      <div>This page will visualize and register all service orders</div>
       <ToastContainer/>
       <DashServiceOrder />
     </>

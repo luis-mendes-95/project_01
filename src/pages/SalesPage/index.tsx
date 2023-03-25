@@ -17,7 +17,6 @@ const SalesPage = () => {
       {showModalEditSales === true ? <FormEditSale /> : null}
 
       <Header />
-      <div>This page will visualize and register all sales</div>
       <ToastContainer/>
       <DashSales />
     </>

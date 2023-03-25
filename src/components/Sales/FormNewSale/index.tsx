@@ -25,7 +25,7 @@ const FormNewSale = () => {
       id: createKey(),
       date: getDate(),
       client: "",
-      items: [{ code: null, description: "", price: null, obs: "" }],
+      items: [{ code: null, description: "", price: null, disccount: null, qty: null, cost: null, margin: null, obs: "" }],
       total: 0,
       payType: "",
       received: 0,
@@ -87,6 +87,8 @@ const FormNewSale = () => {
                 price: null,
                 disccount: null,
                 qty: null,
+                cost: null,
+                margin: null,
                 obs: "" 
               })
             }}>+</button>
@@ -146,6 +148,22 @@ const FormNewSale = () => {
                 <input
                   placeholder="Digite a quantidade"
                   {...register(`items.${index}.qty`, { valueAsNumber: true })}
+                />
+              </div>
+
+              <div className="divLabelAndInput">
+                <label>CUSTO</label>
+                <input
+                  placeholder="Custo do produto"
+                  {...register(`items.${index}.cost`, { valueAsNumber: true })}
+                />
+              </div>
+
+              <div className="divLabelAndInput">
+                <label>MARGEM</label>
+                <input
+                  placeholder="Margem do produto"
+                  {...register(`items.${index}.margin`, { valueAsNumber: true })}
                 />
               </div>
 

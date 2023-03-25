@@ -1,37 +1,60 @@
 import styled from "styled-components";
 
+const blue = "#0077B6";
+const blueHover = "#023E8A";
+const blueLight = "#66B2FF";
+const gray = "#F2F2F2";
+const boxShadow = "0 2px 2px rgba(0, 0, 0, 0.2)";
+
 export const UlRegs = styled.ul`
   width: 25%;
   display: flex;
   flex-direction: column;
   gap: 10%;
 
+  @media (min-width: 1024px) {
+    width: 100%;
+  }
+
+  @media (max-width: 1023px) {
+    width: 100%;
+  }
+
   h2 {
-    color: orange;
+    color: white;
   }
 
   .divTitleUlRegs {
     width: 100%;
-    background-color: black;
+    background-color: ${blueLight};
     display: flex;
     justify-content: center;
+    padding: 10px 0;
+    box-shadow: ${boxShadow};
   }
 
   .divRegDataItem {
     display: flex;
     width: 100%;
+
+    @media (max-width: 380px) {
+      width: 100%;
+      font-size: 6pt;
+      padding-top: 10px;
+    }
   }
 
   .h3RegDataItem {
-    background-color: black;
-    color: orange;
+    background-color: ${blue};
+    color: ${gray};
     width: 50%;
     text-align: center;
+    padding-top: 5px;
   }
 
   .buttonAddNew {
-    background-color: black;
-    color: orange;
+    background-color: ${blue};
+    color: ${gray};
     width: 50%;
     text-align: center;
   }
@@ -40,24 +63,45 @@ export const UlRegs = styled.ul`
     display: flex;
     width: 100%;
     margin: 2px 0;
+    box-shadow: ${boxShadow};
+    transition: 0.1s;
+
+    :hover{
+      border-top: 3pt solid ${blueLight};
+      border-bottom: 3pt solid ${blueLight};
+      transition: 0.1s;
+    }
   }
 
   p {
     width: 50%;
     text-align: center;
     border: 1pt solid black;
+    background-color: ${gray};
+    margin: 0;
+    padding: 10px;
+
+    @media (max-width: 380px) {
+      width: 100%;
+      font-size: 6pt;
+    }
+
   }
 
   button {
     width: 50%;
     cursor: pointer;
     transition: 0.3s;
+    background-color: ${gray};
+    border: none;
+    color: ${blue};
+    padding: 10px;
   }
 
   button:hover {
-    background-color: orange;
+    background-color: ${blueHover};
+    color: ${gray};
     transition: 0.3s;
-    color: black;
   }
 `;
 
