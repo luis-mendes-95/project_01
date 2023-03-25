@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { SalesContext } from "../../../contexts/sales";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,6 +18,116 @@ const FormNewSale = () => {
   const { productsDatabase } = useContext(ProductsContext);
   const { peopleDatabase } = useContext(PeopleContext);
   const { createKey, getDate} = useContext(RegConfig)
+
+  const [cost, setCost] = useState("");
+  const [price, setPrice] = useState("");
+  const [margin, setMargin] = useState("");
+  const [disccount, setDisccount] = useState("");
+  const [total, setTotal ] = useState("")
+  const [received, setReceived ] = useState("")
+
+  const handleCostChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 0) {
+      setCost("");
+      return;
+    }
+
+    let costInCents = parseInt(inputValue, 10);
+    let formattedCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(costInCents / 100);
+
+    setCost(formattedCost);
+  };
+
+  const handleMarginChange = (): void => {
+
+    let numberPrice =  parseFloat(price.replace(/[^\d,]/g, "").replace(",", "."));
+    let numberCost = parseFloat(cost.replace(/[^\d,]/g, "").replace(",", "."));
+
+    const margin = numberPrice - numberCost
+
+    const result = "R$ " + margin.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    setMargin(result)
+
+  };
+
+  const handlePriceChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 0) {
+      setPrice("");
+      return;
+    }
+
+    let costInCents = parseInt(inputValue, 10);
+    let formattedCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(costInCents / 100);
+
+    setPrice(formattedCost);
+
+  };
+
+  const handleDisccountChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 0) {
+      setDisccount("");
+      return;
+    }
+
+    let costInCents = parseInt(inputValue, 10);
+    let formattedCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(costInCents / 100);
+
+    setDisccount(formattedCost);
+
+  };
+
+  const handleTotalChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 0) {
+      setDisccount("");
+      return;
+    }
+
+    let costInCents = parseInt(inputValue, 10);
+    let formattedCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(costInCents / 100);
+
+    setTotal(formattedCost);
+
+  };
+
+  const handleReceivedChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    let inputValue = e.currentTarget.value.replace(/\D/g, "");
+
+    if (inputValue.length === 0) {
+      setDisccount("");
+      return;
+    }
+
+    let costInCents = parseInt(inputValue, 10);
+    let formattedCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(costInCents / 100);
+
+    setReceived(formattedCost);
+
+  };
+
 
   const {register, handleSubmit, control, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(saleSchema),
@@ -126,6 +236,8 @@ const FormNewSale = () => {
               <div className="divLabelAndInput">
                 <label>PREÇO</label>
                 <input
+                  value={price}
+                  onInput={handlePriceChange}
                   placeholder="Digite o preço do produto"
                   {...register(`items.${index}.price`, {
                     valueAsNumber: true,
@@ -136,6 +248,8 @@ const FormNewSale = () => {
               <div className="divLabelAndInput">
                 <label>DESCONTO</label>
                 <input
+                  value={disccount}
+                  onInput={handleDisccountChange}
                   placeholder="Digite o desconto, se houver"
                   {...register(`items.${index}.disccount`, {
                     valueAsNumber: true,
@@ -154,6 +268,8 @@ const FormNewSale = () => {
               <div className="divLabelAndInput">
                 <label>CUSTO</label>
                 <input
+                  value={cost}
+                  onInput={handleCostChange}
                   placeholder="Custo do produto"
                   {...register(`items.${index}.cost`, { valueAsNumber: true })}
                 />
@@ -162,6 +278,8 @@ const FormNewSale = () => {
               <div className="divLabelAndInput">
                 <label>MARGEM</label>
                 <input
+                  value={margin}
+                  onFocus={handleMarginChange}
                   placeholder="Margem do produto"
                   {...register(`items.${index}.margin`, { valueAsNumber: true })}
                 />
@@ -182,7 +300,10 @@ const FormNewSale = () => {
 
         <div className="divLabelAndInput">
           <label>TOTAL</label>
-          <input placeholder="Total Geral da Venda" {...register("total")} />
+          <input 
+          value={total}
+          onInput={handleTotalChange}
+          placeholder="Total Geral da Venda" {...register("total")} />
         </div>
         {errors.total?.message && (
           <p className="pError" aria-label="error">
@@ -193,6 +314,8 @@ const FormNewSale = () => {
         <div className="divLabelAndInput">
           <label>RECEBIDO</label>
           <input
+            value={received}
+            onInput={handleReceivedChange}
             placeholder="Digite o valor recebido"
             {...register("received")}
           />
