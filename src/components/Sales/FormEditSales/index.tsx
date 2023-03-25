@@ -92,6 +92,8 @@ const FormEditSale = () => {
                 price: null,
                 disccount: null,
                 qty: null,
+                cost: null,
+                margin: null,
                 obs: "" 
               })
             }}>+</button>

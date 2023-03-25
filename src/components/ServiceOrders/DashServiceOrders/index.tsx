@@ -13,7 +13,7 @@ const DashServiceOrders = () => {
       <UlRegs>
   
         <div className="divTitleUlRegs">
-          <h2>Service Orders</h2>
+          <h2>👨‍🎨ORDENS DE SERVIÇO</h2>
         </div>
   
         <div className="divRegDataItem">
@@ -26,7 +26,7 @@ const DashServiceOrders = () => {
                 setModalAddServiceOrder();
             }}
           >
-            +
+            ➕👨‍🎨NOVA ORDEM DE SERVIÇO
           </button>
         </div>
   

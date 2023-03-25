@@ -7,12 +7,15 @@ const Header = () => {
 
   return (
     <HeaderApp>
-        <button onClick={()=>{navigate("/")}}>Home</button>
-        <button onClick={()=>{navigate("/peoplepage")}}>People</button>
-        <button onClick={()=>{navigate("/productspage")}}>Products</button>
-        <button onClick={()=>{navigate("/salespage")}}>Sales</button>
-        <button onClick={()=>{navigate("/serviceorderspage")}}>Service Orders</button>
-        <button onClick={()=>{navigate("/receivables")}}>Receivables</button>
+        <button onClick={()=>{navigate("/")}}>🏠HOME</button>
+        {/* <button onClick={()=>{navigate("/schedules")}}>AGENDA</button> */}
+        <button onClick={()=>{navigate("/peoplepage")}}>👥CPF/CNPJ</button>
+        <button onClick={()=>{navigate("/productspage")}}>👕PRODUTOS</button>
+        {/* <button onClick={()=>{navigate("/budgets")}}>ORÇAMENTOS</button> */}
+        <button onClick={()=>{navigate("/salespage")}}>🛒VENDAS</button>
+        <button onClick={()=>{navigate("/serviceorderspage")}}>👨‍🎨OS</button>
+        {/* <button onClick={()=>{navigate("/receivables")}}>A RECEBER</button> */}
+        {/* <button onClick={()=>{navigate("/payables")}}>A PAGAR</button> */}
     </HeaderApp>
   )
 }

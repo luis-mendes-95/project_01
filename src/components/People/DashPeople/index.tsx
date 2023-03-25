@@ -13,12 +13,15 @@ const DashPeople = () => {
     <UlRegs>
 
         <div className="divTitleUlRegs">
-            <h2>People</h2>
+            <h2>👥CPF/CNPJ</h2>
         </div>
 
         <div className="divRegDataItem">
-            <h3 className="h3RegDataItem">Name</h3>
-            <button className="buttonAddNew" onClick={()=>{setModalAddPeople()}}>+</button>
+            <h3 className="h3RegDataItem">NOME</h3>
+            <h3 className="h3RegDataItem">CIDADE</h3>
+            <h3 className="h3RegDataItem">ESTADO</h3>
+            <h3 className="h3RegDataItem">CELULAR</h3>
+            <button className="buttonAddNew" onClick={()=>{setModalAddPeople()}}>➕👥NOVO CPF/CNPJ</button>
         </div>
 
         {peopleDatabase.map((person) => {
@@ -26,7 +29,10 @@ const DashPeople = () => {
             return (
 
                 <li key={person.id}>
-                    <p>{person.nomeRazao}</p>
+                    <p style={{ fontWeight: 'bold' }}>{person.nomeRazao}</p>
+                    <p>{person.cidade}</p>
+                    <p>{person.estado}</p>
+                    <p>{person.celular}</p>
                     <button onClick={()=>{
                         setIdEdit(person.id)
                         setModalEditPeople()
