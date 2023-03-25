@@ -41,6 +41,8 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
       date: data.date,
       client: data.client,
       items: data.items,
+      totalCost: data.totalCost,
+      totalMargin: data.totalMargin,
       total: data.total,
       received: data.received,
     };
@@ -61,6 +63,8 @@ export const SalesProvider = ({ children }: iSalesProviderProps) => {
       date: data.date,
       client: data.client,
       items: data.items,
+      totalCost: data.totalCost,
+      totalMargin: data.totalMargin,
       total: data.total,
       received: data.received,
     };
