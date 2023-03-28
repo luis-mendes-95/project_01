@@ -19,14 +19,14 @@ const FormNewSale = () => {
      const { peopleDatabase } = useContext(PeopleContext);
   const { createKey, getDate} = useContext(RegConfig)
 
-  const [disccount, setDisccount] = useState("");
   const [received, setReceived ] = useState("")
 
-  const handleDisccountChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  const handleDisccountChange = (e: React.FormEvent<HTMLInputElement>, index: number): void => {
+
     let inputValue = e.currentTarget.value.replace(/\D/g, "");
 
     if (inputValue.length === 0) {
-      setDisccount("");
+      fields[index].disccount = "R$ 0,00"
       return;
     }
 
@@ -36,17 +36,12 @@ const FormNewSale = () => {
       currency: "BRL",
     }).format(costInCents / 100);
 
-    setDisccount(formattedCost);
+    setValue(`items.${index}.disccount`, formattedCost)
 
   };
 
   const handleReceivedChange = (e: React.FormEvent<HTMLInputElement>): void => {
     let inputValue = e.currentTarget.value.replace(/\D/g, "");
-
-    if (inputValue.length === 0) {
-      setDisccount("");
-      return;
-    }
 
     let costInCents = parseInt(inputValue, 10);
     let formattedCost = new Intl.NumberFormat("pt-BR", {
@@ -136,10 +131,8 @@ const FormNewSale = () => {
     fields[index].disccount = disccount
     fields[index].subTotal = newPrice
 
-
     setValue(`items.${index}`, fields[index])
 
-  
   };
 
   const calculateQty = (e: React.FormEvent<HTMLInputElement>, index: number): void => {
@@ -310,8 +303,9 @@ const FormNewSale = () => {
               <div className="divLabelAndInput">
                 <label>DESCONTO</label>
                 <input
-                  value={disccount}
-                  onInput={handleDisccountChange}
+                  onInput={(e)=>{
+                    handleDisccountChange(e, index)
+                  }}
                   placeholder="Digite o desconto, se houver"
                   {...register(`items.${index}.disccount`, {
                     valueAsNumber: true,
