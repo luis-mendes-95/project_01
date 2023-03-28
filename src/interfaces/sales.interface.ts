@@ -8,6 +8,7 @@ export interface IItem {
   cost: number | null | string;
   margin: number | null | string;
   obs?: string;
+  subTotal: number | null | string;
 }
 
 export interface IRegisterSales {

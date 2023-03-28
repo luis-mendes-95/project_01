@@ -64,7 +64,7 @@ const FormNewSale = () => {
       id: createKey(),
       date: getDate(),
       client: "",
-      items: [{ code: null, description: "", price: null, disccount: null, qty: null, cost: null, margin: null, obs: "" }],
+      items: [{ code: null, description: "", price: null, disccount: 'R$ 0,00', qty: 1, cost: 'R$ 0,00', margin: null, subTotal: 'R$ 0,00', obs: "" }],
       total: 0,
       payType: "",
       received: 0,
@@ -80,18 +80,127 @@ const FormNewSale = () => {
 
     const codeProduct: any = e.currentTarget.value
 
-    const productToFillFields = productsDatabase.filter(product => product.code === codeProduct)
+    if (fields[index].code !== codeProduct) {
+      const productToFillFields = productsDatabase.filter(product => product.code === codeProduct)
 
-    if (productToFillFields.length > 0) {
-          fields[index].code = productToFillFields[0].code
-          fields[index].cost = productToFillFields[0].cost
-          fields[index].description = productToFillFields[0].description
-          fields[index].margin = productToFillFields[0].margin
-          fields[index].price = productToFillFields[0].price
-
-          setValue(`items.${index}`, fields[index])
-
+      if (productToFillFields.length > 0) {
+            fields[index].code = productToFillFields[0].code
+            fields[index].cost = productToFillFields[0].cost
+            fields[index].disccount = "R$ 0,00"
+            fields[index].description = productToFillFields[0].description
+            fields[index].margin = productToFillFields[0].margin
+            fields[index].price = productToFillFields[0].price
+            fields[index].qty = 1
+            fields[index].subTotal = productToFillFields[0].price
+  
+            setValue(`items.${index}`, fields[index])
+  
+      }
     }
+
+
+  
+  };
+
+  const calculateDisccount = (e: React.FormEvent<HTMLInputElement>, index: number): void => {
+
+    const thisItem = productsDatabase.filter(product => product.code === fields[index].code)[0]
+
+    let disccount: any = parseFloat(e.currentTarget.value.replace(/[^\d,]/g, "").replace(",", "."));
+
+    const margin: any = thisItem.margin
+
+    const price: any = thisItem.price
+
+    let newPrice: any = parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+
+    newPrice = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newPrice / 1);
+
+    let newMargin: any = parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+
+    newMargin = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newMargin / 1);
+
+    disccount = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(disccount / 1);
+
+    fields[index].margin = newMargin
+    fields[index].price = newPrice
+    fields[index].disccount = disccount
+    fields[index].subTotal = newPrice
+
+
+    setValue(`items.${index}`, fields[index])
+
+  
+  };
+
+  const calculateQty = (e: React.FormEvent<HTMLInputElement>, index: number): void => {
+
+    const thisItem = productsDatabase.filter(product => product.code === fields[index].code)[0]
+
+    let qty = parseInt(e.currentTarget.value)
+
+    let disccount: any = fields[index].disccount
+
+    disccount = parseFloat(disccount.replace(/[^\d,]/g, "").replace(",", "."));
+
+    const margin: any = thisItem.margin
+
+    const price: any = thisItem.price
+
+    const cost: any = thisItem.cost
+
+    let newCost: any = parseFloat(cost.replace(/[^\d,]/g, "").replace(",", ".")) * qty
+
+    newCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newCost / 1);
+
+    let newPrice: any = parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+
+    newPrice = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newPrice / 1);
+
+    let subTotal: any = (parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount) * qty
+
+    subTotal = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(subTotal / 1);
+
+    let newMargin: any = (parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount) * qty
+
+    newMargin = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newMargin / 1);
+
+    disccount = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(disccount / 1);
+
+    fields[index].margin = newMargin
+    fields[index].price = newPrice
+    fields[index].disccount = disccount
+    fields[index].qty = qty
+    fields[index].subTotal = subTotal
+    fields[index].cost = newCost
+
+
+    setValue(`items.${index}`, fields[index])
+
   
   };
 
@@ -147,7 +256,8 @@ const FormNewSale = () => {
                 qty: null,
                 cost: null,
                 margin: null,
-                obs: "" 
+                obs: "" ,
+                subTotal: null
               }
               )
             }}>+</button>
@@ -206,6 +316,9 @@ const FormNewSale = () => {
                   {...register(`items.${index}.disccount`, {
                     valueAsNumber: true,
                   })}
+                  onBlur={(e)=>{
+                    calculateDisccount(e, index)
+                  }}
                 />
               </div>
 
@@ -214,6 +327,9 @@ const FormNewSale = () => {
                 <input
                   placeholder="Digite a quantidade"
                   {...register(`items.${index}.qty`, { valueAsNumber: true })}
+                  onBlur={(e)=>{
+                    calculateQty(e, index)
+                  }}
                 />
               </div>
 
@@ -234,13 +350,23 @@ const FormNewSale = () => {
               </div>
 
               <div className="divLabelAndInput">
+                <label>SUBTOTAL</label>
+                <input
+                  placeholder="Subtotal deste item"
+                  {...register(`items.${index}.subTotal`, { valueAsNumber: true })}
+                />
+              </div>
+
+              <div className="divLabelAndInput">
                 <label>OBS</label>
                 <textarea
                   placeholder="Digite aqui informações a respeito deste item"
                   {...register(`items.${index}.obs`)}
                 />
               </div>
+
             </div>
+            
           );
         })}
 
