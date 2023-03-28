@@ -94,7 +94,8 @@ const FormEditSale = () => {
                 qty: null,
                 cost: null,
                 margin: null,
-                obs: "" 
+                obs: "",
+                subTotal: null
               })
             }}>+</button>
                     <button className="buttonRed" onClick={(e) => {
