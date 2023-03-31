@@ -12,10 +12,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormNewProducts = () => {
-
   const { registerProducts, productsDatabase } = useContext(ProductsContext);
-                      const { peopleDatabase } = useContext(PeopleContext);
-                 const { setModalAddProducts } = useContext(ModalContext);
+  const { peopleDatabase } = useContext(PeopleContext);
+  const { setModalAddProducts } = useContext(ModalContext);
 
   const [cost, setCost] = useState("");
   const [price, setPrice] = useState("");
@@ -39,16 +38,21 @@ const FormNewProducts = () => {
   };
 
   const handleMarginChange = (): void => {
-
-    let numberPrice =  parseFloat(price.replace(/[^\d,]/g, "").replace(",", "."));
+    let numberPrice = parseFloat(
+      price.replace(/[^\d,]/g, "").replace(",", ".")
+    );
     let numberCost = parseFloat(cost.replace(/[^\d,]/g, "").replace(",", "."));
 
-    const margin = numberPrice - numberCost
+    const margin = numberPrice - numberCost;
 
-    const result = "R$ " + margin.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const result =
+      "R$ " +
+      margin.toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
 
-    setMargin(result)
-
+    setMargin(result);
   };
 
   const handlePriceChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -66,13 +70,15 @@ const FormNewProducts = () => {
     }).format(costInCents / 100);
 
     setPrice(formattedCost);
-
   };
 
-  const {    register,    handleSubmit,    formState: { errors },  } = useForm<IRegisterProducts>({ resolver: yupResolver(ProductsSchema) });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IRegisterProducts>({ resolver: yupResolver(ProductsSchema) });
 
   const submit = (data: IRegisterProducts) => {
-
     const checkCodeExistence = productsDatabase.filter(
       (product) => product.code === data.code
     );
@@ -83,7 +89,6 @@ const FormNewProducts = () => {
 
     registerProducts(data);
     setModalAddProducts();
-    
   };
 
   return (
@@ -203,7 +208,16 @@ const FormNewProducts = () => {
           </p>
         )}
 
-        <button type="submit">Save</button>
+        <div className="DivButtonsReg">
+          <button type="submit" className="buttonSaveReg">
+            Salvar
+          </button>
+
+          <button onClick={setModalAddProducts} className="buttonCancelReg">
+            Cancelar
+          </button>
+        </div>
+
       </FormAdd>
     </Modal>
   );

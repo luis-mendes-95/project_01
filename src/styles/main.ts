@@ -108,10 +108,11 @@ export const UlRegs = styled.ul`
 export const FormAdd = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 0px;
   gap: 5px;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 
   .divLabelAndInput {
     display: flex;
@@ -126,10 +127,35 @@ export const FormAdd = styled.form`
     }
   }
 
+
+
   input,
   select,
   textarea {
     width: 50%;
+  }
+
+  input,select{
+    height: 25px;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 4px 2px rgba(0, 90, 255, 0.4); 
+    padding: 5px;
+  }
+
+  select{
+    transition: 0.3s;
+    :hover{
+      cursor: pointer;
+      background-color: rgba(0, 90, 255, 0.4);
+      transition: 0.3s;
+    }
+  }
+
+  input:focus{
+    outline: none; 
+    box-shadow: 0 0 4px 2px black; 
   }
 
   textarea {
@@ -186,6 +212,19 @@ export const FormAdd = styled.form`
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    padding: 5px 10px 0px 0px;
+
+    button{
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      padding: 5px 15px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 1px 1px 5px black;
+      
+    }
+
   }
 
   .pError {
@@ -201,15 +240,43 @@ export const FormAdd = styled.form`
     transition: 0.3s;
     transform: scale(1.1);
   }
+
+  .DivButtonsReg{
+
+    button{
+      margin: 5px 10px 5px 10px;
+    }
+
+    .buttonSaveReg{
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 8px;
+      box-shadow: 1px 1px 5px black;
+    }
+
+    .buttonCancelReg{
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 8px;
+      box-shadow: 1px 1px 5px black;
+    }
+
+  }
+
 `;
 
 export const FormEdit = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 0px;
   gap: 5px;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 
   .divLabelAndInput {
     display: flex;
@@ -217,17 +284,111 @@ export const FormEdit = styled.form`
     gap: 15px;
     justify-content: space-between;
     width: 80%;
+
+    label {
+      width: 50%;
+      text-align: right;
+    }
   }
 
+
+
   input,
-  select {
-    width: 54%;
+  select,
+  textarea {
+    width: 50%;
+  }
+
+  input,select{
+    height: 25px;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 4px 2px rgba(0, 90, 255, 0.4); 
+    padding: 5px;
+  }
+
+  select{
+    transition: 0.3s;
+    :hover{
+      cursor: pointer;
+      background-color: rgba(0, 90, 255, 0.4);
+      transition: 0.3s;
+    }
+  }
+
+  input:focus{
+    outline: none; 
+    box-shadow: 0 0 4px 2px black; 
+  }
+
+  textarea {
+    height: 200px;
+  }
+
+  .divFormFields {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1pt solid black;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #8080802b;
+    overflow-y: scroll;
+    max-height: 40vh;
+  }
+
+  .divIndividualItemSale {
+    border: 1pt solid black;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .divButtonsControlForms {
+    width: 100px;
+    display: flex;
+    gap: 5px;
+    position: sticky;
+    top: 10px;
+
+    button {
+      border: none;
+      padding: 5px;
+    }
+
+    .buttonRed {
+      width: 100%;
+      background-color: red;
+      color: white;
+    }
+
+    .buttonGreen {
+      width: 100%;
+      background-color: green;
+      color: white;
+    }
   }
 
   .divCloseButton {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    padding: 5px 10px 0px 0px;
+
+    button{
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      padding: 5px 15px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 1px 1px 5px black;
+      
+    }
+
   }
 
   .pError {
@@ -243,4 +404,31 @@ export const FormEdit = styled.form`
     transition: 0.3s;
     transform: scale(1.1);
   }
+
+  .DivButtonsReg{
+
+    button{
+      margin: 5px 10px 5px 10px;
+    }
+
+    .buttonSaveReg{
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 8px;
+      box-shadow: 1px 1px 5px black;
+    }
+
+    .buttonCancelReg{
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 8px;
+      box-shadow: 1px 1px 5px black;
+    }
+
+  }
+
 `;

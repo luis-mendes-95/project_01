@@ -9,26 +9,33 @@ import { RegConfig } from "../../../contexts/regConfig";
 import Modal from "../../Modal";
 import { FormAdd } from "../../../styles/main";
 import { PeopleContext } from "../../../contexts/people";
-import { FormValues, IRegisterServiceOrder } from "../../../interfaces/serviceOrder.interface";
+import {
+  FormValues,
+  IRegisterServiceOrder,
+} from "../../../interfaces/serviceOrder.interface";
 import { saleSchema } from "../../../schemas/sales.schema";
 
 const FormNewServiceOrder = () => {
-
   const { registerServiceOrder } = useContext(ServiceOrderContext);
   const { setModalAddServiceOrder } = useContext(ModalContext);
   const { productsDatabase } = useContext(ProductsContext);
   const { salesDatabase } = useContext(SalesContext);
-  const { serviceOrdersDatabase } = useContext(ServiceOrderContext)
+  const { serviceOrdersDatabase } = useContext(ServiceOrderContext);
   const { peopleDatabase } = useContext(PeopleContext);
   const { createKey, getDate } = useContext(RegConfig);
 
-  const { register, handleSubmit, control, formState: { errors } } = useForm<FormValues> ({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormValues>({
     resolver: yupResolver(saleSchema),
     defaultValues: {
       id: createKey(),
       date: getDate(),
       client: "",
-      items: [{ code: null, description: "", workDescription: "" }]
+      items: [{ code: null, description: "", workDescription: "" }],
     },
   });
 
@@ -38,21 +45,18 @@ const FormNewServiceOrder = () => {
   });
 
   const submit = (data: IRegisterServiceOrder) => {
-    console.log('funfando')
+    console.log("funfando");
     registerServiceOrder(data);
     setModalAddServiceOrder();
   };
 
   return (
-
     <Modal>
-
       <FormAdd onSubmit={handleSubmit(submit)} noValidate>
-
         <div className="divCloseButton">
           <button
             onClick={(e) => {
-              e.preventDefault()
+              e.preventDefault();
               setModalAddServiceOrder();
             }}
           >
@@ -66,7 +70,9 @@ const FormNewServiceOrder = () => {
             <option value="">Selecione o cliente</option>
             {peopleDatabase.map((person) => {
               return (
-                <option key={person.id} value={person.nomeRazao}>{person.nomeRazao}</option>
+                <option key={person.id} value={person.nomeRazao}>
+                  {person.nomeRazao}
+                </option>
               );
             })}
           </select>
@@ -78,22 +84,31 @@ const FormNewServiceOrder = () => {
         )}
 
         <div className="divFormFields">
-
           <label>ITENS:</label>
           <div className="divButtonsControlForms">
-            <button className="buttonGreen" onClick={(e) => {
-              e.preventDefault()
-              append({
-                code: null,
-                description: "",
-                qty: null,
-                workDescription: ""
-              })
-            }}>+</button>
-            <button className="buttonRed" onClick={(e) => {
-              e.preventDefault()
-              remove(1)
-            }}>-</button>
+            <button
+              className="buttonGreen"
+              onClick={(e) => {
+                e.preventDefault();
+                append({
+                  code: null,
+                  description: "",
+                  qty: null,
+                  workDescription: "",
+                });
+              }}
+            >
+              +
+            </button>
+            <button
+              className="buttonRed"
+              onClick={(e) => {
+                e.preventDefault();
+                remove(1);
+              }}
+            >
+              -
+            </button>
           </div>
 
           {fields.map((field, index) => {
@@ -103,7 +118,9 @@ const FormNewServiceOrder = () => {
                   <label>CÓDIGO</label>
                   <input
                     placeholder="Digite aqui o código do produto"
-                    {...register(`items.${index}.code`, { valueAsNumber: true })}
+                    {...register(`items.${index}.code`, {
+                      valueAsNumber: true,
+                    })}
                   />
                 </div>
 
@@ -139,15 +156,19 @@ const FormNewServiceOrder = () => {
               </div>
             );
           })}
-
         </div>
 
-        <button type="submit">Save</button>
+        <div className="DivButtonsReg">
+          <button type="submit" className="buttonSaveReg">
+            Salvar
+          </button>
 
+          <button onClick={setModalAddServiceOrder} className="buttonCancelReg">
+            Cancelar
+          </button>
+        </div>
       </FormAdd>
-
     </Modal>
-
   );
 };
 

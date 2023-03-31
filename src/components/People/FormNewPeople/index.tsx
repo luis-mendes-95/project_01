@@ -334,7 +334,13 @@ const FormNewPeople = () => {
           </p>
         )}
 
-        <button type="submit">Save</button>
+        <div className="DivButtonsReg">
+
+          <button type="submit" className="buttonSaveReg">Salvar</button>
+
+          <button onClick={setModalAddPeople} className="buttonCancelReg">Cancelar</button>
+
+        </div>
 
       </FormAdd>
       
