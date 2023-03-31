@@ -111,7 +111,7 @@ const FormEditProducts = () => {
   return (
     <Modal>
       <FormEdit onSubmit={handleSubmit(submit)}>
-        <div>
+        <div className="divCloseButton">
           <button
             onClick={() => {
               setModalEditProducts();
@@ -233,15 +233,22 @@ const FormEditProducts = () => {
           </p>
         )}
 
-        <button type="submit">Save</button>
-        <button
-          onClick={() => {
-            setModalEditProducts();
-            deleteProducts(idToEdit);
-          }}
-        >
-          Delete
-        </button>
+        <div className="DivButtonsReg">
+          <button type="submit" className="buttonSaveReg">
+            Salvar
+          </button>
+
+          <button
+            onClick={() => {
+              setModalEditProducts();
+              deleteProducts(idToEdit);
+            }}
+            className="buttonCancelReg"
+          >
+            Deletar
+          </button>
+        </div>
+        
       </FormEdit>
     </Modal>
   );
