@@ -16,11 +16,11 @@ const FormNewProducts = () => {
   const { peopleDatabase } = useContext(PeopleContext);
   const { setModalAddProducts } = useContext(ModalContext);
 
-  const [cost, setCost] = useState("");
-  const [price, setPrice] = useState("");
-  const [margin, setMargin] = useState("");
+  const [cost, setCost] = useState("R$ 0,00");
+  const [price, setPrice] = useState("R$ 0,00");
+  const [margin, setMargin] = useState("R$ 0,00");
 
-  const handleCostChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  const handleCostChange = (e: any): void => {
     let inputValue = e.currentTarget.value.replace(/\D/g, "");
 
     if (inputValue.length === 0) {
@@ -85,6 +85,10 @@ const FormNewProducts = () => {
 
     if (checkCodeExistence.length > 0) {
       return toast.error("CÓDIGO DE PRODUTO DUPLICADO");
+    }
+
+    if (!data.cost) {
+      data.cost = 0
     }
 
     registerProducts(data);
@@ -153,6 +157,7 @@ const FormNewProducts = () => {
             onInput={handlePriceChange}
             placeholder="Insira o preço final do produto aqui"
             {...register("price")}
+            onMouseOut={handleMarginChange}
           />
         </div>
         {errors.price?.message && (
@@ -165,7 +170,7 @@ const FormNewProducts = () => {
           <label>MARGEM</label>
           <input
             value={margin}
-            onFocus={handleMarginChange}
+            // onFocus={handleMarginChange}
             placeholder="Insira a margem de contribuição aqui"
             {...register("margin")}
           />
