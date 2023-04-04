@@ -13,6 +13,7 @@ import {
   IRegisterSales,
 } from "../../../interfaces/sales.interface";
 import { saleSchema } from "../../../schemas/sales.schema";
+import IRegisterProducts from "../../../interfaces/products.interface";
 
 const FormNewSale = () => {
   const { registerSales } = useContext(SalesContext);
@@ -117,32 +118,46 @@ const FormNewSale = () => {
     }
   };
 
-  const calculateDisccount = (
-    e: React.FormEvent<HTMLInputElement>,
-    index: number
-  ): void => {
-    const thisItem = productsDatabase.filter(
-      (product) => product.code === fields[index].code
-    )[0];
 
-    let disccount: any = parseFloat(
-      e.currentTarget.value.replace(/[^\d,]/g, "").replace(",", ".")
-    );
+  const calculateQtyAfterDisccount = (item: IRegisterProducts, index: number): void => {
+
+    const thisItem = item
+
+    let qty: any = (fields[index].qty)
+
+    let disccount: any = fields[index].disccount
+
+    disccount = parseFloat(disccount.replace(/[^\d,]/g, "").replace(",", "."));
 
     const margin: any = thisItem.margin;
 
     const price: any = thisItem.price;
 
-    let newPrice: any =
-      parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount;
+    const cost: any = thisItem.cost
+
+    let newCost: any = parseFloat(cost.replace(/[^\d,]/g, "").replace(",", ".")) * qty
+
+    newCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newCost / 1);
+
+    let newPrice: any = parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
 
     newPrice = new Intl.NumberFormat("pt-BR", {
       style: "currency",
       currency: "BRL",
     }).format(newPrice / 1);
 
-    let newMargin: any =
-      parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount;
+    let subTotal: any = (parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount) * qty
+
+    subTotal = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(subTotal / 1);
+
+    let newMargin: any = (parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount) * qty
+
 
     newMargin = new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -154,11 +169,15 @@ const FormNewSale = () => {
       currency: "BRL",
     }).format(disccount / 1);
 
-    fields[index].margin = newMargin;
-    fields[index].price = newPrice;
-    fields[index].disccount = disccount;
-    fields[index].subTotal = newPrice;
+    fields[index].margin = newMargin
+    fields[index].price = newPrice
+    fields[index].disccount = disccount
+    fields[index].qty = qty
+    fields[index].subTotal = subTotal
+    fields[index].cost = newCost
 
+    setValue(`items.${index}`, fields[index])
+    
     setValue(`items.${index}`, fields[index]);
   };
 
@@ -172,7 +191,9 @@ const FormNewSale = () => {
 
     let qty = parseInt(e.currentTarget.value);
 
-    let disccount: any = fields[index].disccount;
+    let qty = parseInt(e.currentTarget?.value)
+
+    let disccount: any = fields[index].disccount
 
     disccount = parseFloat(disccount.replace(/[^\d,]/g, "").replace(",", "."));
 
@@ -231,6 +252,48 @@ const FormNewSale = () => {
 
     setValue(`items.${index}`, fields[index]);
   };
+
+  const calculateDisccount = (e: React.FormEvent<HTMLInputElement>, index: number): void => {
+
+    const thisItem = productsDatabase.filter(product => product.code === fields[index].code)[0]
+
+    let disccount: any = parseFloat(e.currentTarget.value.replace(/[^\d,]/g, "").replace(",", "."));
+
+    const margin: any = thisItem.margin
+
+    const price: any = thisItem.price
+
+    let newPrice: any = parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+
+    newPrice = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newPrice / 1);
+
+    let newMargin: any = parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+
+    newMargin = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newMargin / 1);
+
+    disccount = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(disccount / 1);
+
+    fields[index].margin = newMargin
+    fields[index].price = newPrice
+    fields[index].disccount = disccount
+    fields[index].subTotal = newPrice
+
+    setValue(`items.${index}`, fields[index])
+
+    calculateQtyAfterDisccount(thisItem, index)
+
+  };
+
+
 
   const submit = (data: IRegisterSales) => {
     registerSales(data);
