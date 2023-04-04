@@ -14,10 +14,11 @@ import {
 } from "../../../interfaces/sales.interface";
 import { saleSchema } from "../../../schemas/sales.schema";
 import IRegisterProducts from "../../../interfaces/products.interface";
+import { toast } from "react-toastify";
 
 const FormNewSale = () => {
   const { registerSales } = useContext(SalesContext);
-  const { setModalAddSale } = useContext(ModalContext);
+  const { setModalAddSale, setModalAddProducts } = useContext(ModalContext);
   const { productsDatabase } = useContext(ProductsContext);
   const { peopleDatabase } = useContext(PeopleContext);
   const { createKey, getDate } = useContext(RegConfig);
@@ -113,8 +114,13 @@ const FormNewSale = () => {
         fields[index].qty = 1;
         fields[index].subTotal = productToFillFields[0].price;
 
-        setValue(`items.${index}`, fields[index]);
+        return setValue(`items.${index}`, fields[index]);
       }
+
+      toast.error('PRODUTO NÃO CADASTRADO')
+      setModalAddProducts()
+      toast.success('FAÇA O CADASTRO')
+
     }
   };
 
