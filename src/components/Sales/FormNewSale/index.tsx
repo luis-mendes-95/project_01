@@ -10,6 +10,7 @@ import { FormAdd } from "../../../styles/main";
 import { PeopleContext } from "../../../contexts/people";
 import { FormValues, IRegisterSales } from "../../../interfaces/sales.interface";
 import { saleSchema } from "../../../schemas/sales.schema";
+import IRegisterProducts from "../../../interfaces/products.interface";
 
 const FormNewSale = () => {
 
@@ -97,15 +98,28 @@ const FormNewSale = () => {
   
   };
 
-  const calculateDisccount = (e: React.FormEvent<HTMLInputElement>, index: number): void => {
+  const calculateQtyAfterDisccount = (item: IRegisterProducts, index: number): void => {
 
-    const thisItem = productsDatabase.filter(product => product.code === fields[index].code)[0]
+    const thisItem = item
 
-    let disccount: any = parseFloat(e.currentTarget.value.replace(/[^\d,]/g, "").replace(",", "."));
+    let qty: any = (fields[index].qty)
+
+    let disccount: any = fields[index].disccount
+
+    disccount = parseFloat(disccount.replace(/[^\d,]/g, "").replace(",", "."));
 
     const margin: any = thisItem.margin
 
     const price: any = thisItem.price
+
+    const cost: any = thisItem.cost
+
+    let newCost: any = parseFloat(cost.replace(/[^\d,]/g, "").replace(",", ".")) * qty
+
+    newCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newCost / 1);
 
     let newPrice: any = parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
 
@@ -114,7 +128,14 @@ const FormNewSale = () => {
       currency: "BRL",
     }).format(newPrice / 1);
 
-    let newMargin: any = parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+    let subTotal: any = (parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount) * qty
+
+    subTotal = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(subTotal / 1);
+
+    let newMargin: any = (parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount) * qty
 
     newMargin = new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -129,7 +150,9 @@ const FormNewSale = () => {
     fields[index].margin = newMargin
     fields[index].price = newPrice
     fields[index].disccount = disccount
-    fields[index].subTotal = newPrice
+    fields[index].qty = qty
+    fields[index].subTotal = subTotal
+    fields[index].cost = newCost
 
     setValue(`items.${index}`, fields[index])
 
@@ -139,7 +162,7 @@ const FormNewSale = () => {
 
     const thisItem = productsDatabase.filter(product => product.code === fields[index].code)[0]
 
-    let qty = parseInt(e.currentTarget.value)
+    let qty = parseInt(e.currentTarget?.value)
 
     let disccount: any = fields[index].disccount
 
@@ -196,6 +219,48 @@ const FormNewSale = () => {
 
   
   };
+
+  const calculateDisccount = (e: React.FormEvent<HTMLInputElement>, index: number): void => {
+
+    const thisItem = productsDatabase.filter(product => product.code === fields[index].code)[0]
+
+    let disccount: any = parseFloat(e.currentTarget.value.replace(/[^\d,]/g, "").replace(",", "."));
+
+    const margin: any = thisItem.margin
+
+    const price: any = thisItem.price
+
+    let newPrice: any = parseFloat(price.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+
+    newPrice = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newPrice / 1);
+
+    let newMargin: any = parseFloat(margin.replace(/[^\d,]/g, "").replace(",", ".")) - disccount
+
+    newMargin = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(newMargin / 1);
+
+    disccount = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(disccount / 1);
+
+    fields[index].margin = newMargin
+    fields[index].price = newPrice
+    fields[index].disccount = disccount
+    fields[index].subTotal = newPrice
+
+    setValue(`items.${index}`, fields[index])
+
+    calculateQtyAfterDisccount(thisItem, index)
+
+  };
+
+
 
   const submit = (data: IRegisterSales) => {
     registerSales(data);
