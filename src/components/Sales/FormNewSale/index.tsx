@@ -191,8 +191,6 @@ const FormNewSale = () => {
 
     let qty = parseInt(e.currentTarget.value);
 
-    let qty = parseInt(e.currentTarget?.value)
-
     let disccount: any = fields[index].disccount
 
     disccount = parseFloat(disccount.replace(/[^\d,]/g, "").replace(",", "."));
