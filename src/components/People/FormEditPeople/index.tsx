@@ -95,7 +95,7 @@ const FormEditPeople = () => {
   return (
     <Modal>
       <FormEdit onSubmit={handleSubmit(submit)}>
-        <div>
+        <div className="divCloseButton">
           <button
             onClick={() => {
               setModalEditPeople();
@@ -374,16 +374,23 @@ const FormEditPeople = () => {
           </p>
         )}
 
-        <button type="submit">Save</button>
+        <div className="DivButtonsReg">
+          <button type="submit" className="buttonSaveReg">
+            Salvar
+          </button>
 
-        <button
-          onClick={() => {
-            setModalEditPeople();
-            deletePeople(idToEdit);
-          }}
-        >
-          Delete
-        </button>
+          <button
+            onClick={() => {
+              setModalEditPeople();
+              deletePeople(idToEdit);
+            }}
+            type="submit"
+            className="buttonCancelReg"
+          >
+            Deletar
+          </button>
+        </div>
+        
       </FormEdit>
     </Modal>
   );
