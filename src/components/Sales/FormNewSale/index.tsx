@@ -24,6 +24,9 @@ const FormNewSale = () => {
   const { createKey, getDate } = useContext(RegConfig);
 
   const [received, setReceived] = useState("");
+  const [totalSale, setTotalSale] = useState("R$ 0,00")
+  const [totalCostSale, setTotalCostSale] = useState("R$ 0,00")
+  const [totalMarginSale, setTotalMarginSale] = useState("R$ 0,00")
 
   const handleDisccountChange = (
     e: React.FormEvent<HTMLInputElement>,
@@ -73,18 +76,18 @@ const FormNewSale = () => {
         {
           code: null,
           description: "",
-          price: null,
+          price: "R$ 0,00",
           disccount: "R$ 0,00",
           qty: 1,
           cost: "R$ 0,00",
-          margin: null,
+          margin: "R$ 0,00",
           subTotal: "R$ 0,00",
           obs: "",
         },
       ],
-      total: 0,
+      total: "R$ 0,00",
       payType: "",
-      received: 0,
+      received: "R$ 0,00",
     },
   });
 
@@ -297,6 +300,60 @@ const FormNewSale = () => {
 
   };
 
+  const calculateTotalSale = () => {
+
+    let subTotal: number | string = 0
+    let totalCost: number | string = 0
+    let totalMargin: number | string = 0
+
+    fields.map((field)=>{
+
+      let individualSubTotal: any = field.subTotal
+      individualSubTotal = parseFloat(individualSubTotal.replace(/[^\d,]/g, "").replace(",", "."));
+      return subTotal += individualSubTotal
+
+    })
+
+    fields.map((field)=>{
+
+      let individualCost: any = field.cost
+      individualCost = parseFloat(individualCost.replace(/[^\d,]/g, "").replace(",", "."));
+      return totalCost += individualCost
+
+    })
+
+    fields.map((field)=>{
+
+      let individualMargin: any = field.margin
+      individualMargin = parseFloat(individualMargin.replace(/[^\d,]/g, "").replace(",", "."));
+      return totalMargin += individualMargin
+
+    })
+
+    subTotal = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(subTotal / 1);
+
+    totalCost = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(totalCost / 1);
+
+    totalMargin = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(totalMargin / 1);
+
+
+
+    setTotalSale(subTotal)
+    setTotalCostSale(totalCost)
+    setTotalMarginSale(totalMargin)
+
+
+  }
+
 
 
   const submit = (data: IRegisterSales) => {
@@ -369,7 +426,7 @@ const FormNewSale = () => {
             </button>
           </div>
 
-          {/*  ********************************************** ITEM INDIVIDUAL ************************************************************** */}
+          {/*  ********************************************** INICIO ITEM INDIVIDUAL ************************************************************** */}
 
           {fields.map((field, index) => {
             return (
@@ -378,9 +435,8 @@ const FormNewSale = () => {
                   <label>CÓDIGO</label>
                   <input
                     placeholder="Digite aqui o código do produto"
-                    {...register(`items.${index}.code`, {
-                      valueAsNumber: true,
-                    })}
+                    {...register(`items.${index}.code`
+                    )}
                     onBlur={(e) => {
                       completeItemFields(e, index);
                     }}
@@ -389,7 +445,7 @@ const FormNewSale = () => {
 
                 <div className="divLabelAndInput">
                   <label>PRODUTO</label>
-                  <select {...register(`items.${index}.description`)}>
+                  <select {...register(`items.${index}.description`)} disabled>
                     <option value="">SELECIONE O PRODUTO</option>
                     {productsDatabase.map((product) => {
                       return (
@@ -405,9 +461,7 @@ const FormNewSale = () => {
                   <label>PREÇO</label>
                   <input
                     placeholder="Digite o preço do produto"
-                    {...register(`items.${index}.price`, {
-                      valueAsNumber: true,
-                    })}
+                    {...register(`items.${index}.price`)}
                   />
                 </div>
 
@@ -418,9 +472,7 @@ const FormNewSale = () => {
                       handleDisccountChange(e, index);
                     }}
                     placeholder="Digite o desconto, se houver"
-                    {...register(`items.${index}.disccount`, {
-                      valueAsNumber: true,
-                    })}
+                    {...register(`items.${index}.disccount`)}
                     onBlur={(e) => {
                       calculateDisccount(e, index);
                     }}
@@ -431,7 +483,7 @@ const FormNewSale = () => {
                   <label>QTD</label>
                   <input
                     placeholder="Digite a quantidade"
-                    {...register(`items.${index}.qty`, { valueAsNumber: true })}
+                    {...register(`items.${index}.qty`)}
                     onBlur={(e) => {
                       calculateQty(e, index);
                     }}
@@ -442,9 +494,7 @@ const FormNewSale = () => {
                   <label>CUSTO</label>
                   <input
                     placeholder="Custo do produto"
-                    {...register(`items.${index}.cost`, {
-                      valueAsNumber: true,
-                    })}
+                    {...register(`items.${index}.cost`)}
                   />
                 </div>
 
@@ -452,9 +502,8 @@ const FormNewSale = () => {
                   <label>MARGEM</label>
                   <input
                     placeholder="Margem do produto"
-                    {...register(`items.${index}.margin`, {
-                      valueAsNumber: true,
-                    })}
+                    {...register(`items.${index}.margin`
+                    )}
                   />
                 </div>
 
@@ -462,9 +511,8 @@ const FormNewSale = () => {
                   <label>SUBTOTAL</label>
                   <input
                     placeholder="Subtotal deste item"
-                    {...register(`items.${index}.subTotal`, {
-                      valueAsNumber: true,
-                    })}
+                    {...register(`items.${index}.subTotal`
+                    )}
                   />
                 </div>
 
@@ -480,10 +528,20 @@ const FormNewSale = () => {
           })}
         </div>
 
+          {/*  ********************************************** FIM ITEM INDIVIDUAL ************************************************************** */}
+
+        <div className="DivButtonsReg">
+          <button onClick={(e)=>{
+            e.preventDefault()
+            calculateTotalSale()
+          }} className="buttonSaveReg">Atualizar Campos</button>
+        </div>
+
         <div className="divLabelAndInput">
           <label>CUSTO</label>
           <input
             placeholder="Total Geral da Venda"
+            value={totalCostSale}
             {...register("totalCost")}
           />
         </div>
@@ -492,13 +550,17 @@ const FormNewSale = () => {
           <label>MARGEM</label>
           <input
             placeholder="Total Geral da Venda"
+            value={totalMarginSale}
             {...register("totalMargin")}
           />
         </div>
 
         <div className="divLabelAndInput">
           <label>TOTAL</label>
-          <input placeholder="Total Geral da Venda" {...register("total")} />
+          <input 
+          placeholder="Total Geral da Venda"
+          value={totalSale}
+          {...register("total")} />
         </div>
         {errors.total?.message && (
           <p className="pError" aria-label="error">
