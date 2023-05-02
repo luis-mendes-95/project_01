@@ -1,5 +1,5 @@
 import HomeLogin from "../../components/Login/HomeLogin";
-import Header from "../../components/Header";
+import {HeaderApp} from "../../styles/header";
 import { ModalContext } from "../../contexts/modal";
 import { useContext } from "react";
 import FormSignUp from "../../components/Login/FormSignUp";
@@ -18,8 +18,11 @@ const LoginPage = () => {
       <Header /> */}
       <ToastContainer/>
       <HomeLogin />
-      <button onClick={setModalSignUp}>CADASTRAR-SE</button>
-      <button onClick={setModalLogin}>EFETUAR LOGIN</button>
+      <HeaderApp>
+        <button className="buttonAddNew" onClick={setModalSignUp}>CADASTRAR-SE</button>
+        <button onClick={setModalLogin}>EFETUAR LOGIN</button>
+      </HeaderApp>
+
     </>
   );
 };

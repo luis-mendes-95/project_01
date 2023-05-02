@@ -432,3 +432,41 @@ export const FormEdit = styled.form`
   }
 
 `;
+
+export const DivAdvertising = styled.div`
+  width: 100vw;
+  display: flex;
+  background-color: ${blueLight};
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 15pt;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  flex-direction: column;
+
+  h1{
+    padding: 5px 25px;
+    font-size: 25pt;
+    background-color: ${blueHover};
+    border-radius: 10px;
+  }
+
+  h2{
+    font-size: 35pt;
+    margin-bottom: 150px;
+  }
+
+  .ul_features{
+    color: ${blueHover};
+
+    li{
+      list-style: none;
+      font-size: 20pt;
+    }
+
+  }
+
+
+`;
