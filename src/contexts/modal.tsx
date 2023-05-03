@@ -6,23 +6,25 @@ interface iModalProviderFunctions {
   showModalAddSales: boolean;
   showModalAddProducts: boolean;
   showModalAddServiceOrder: boolean;
+  showModalSignUp: boolean;
 
   showModalEditPeople: boolean;
   showModalEditSales: boolean;
   showModalEditProducts: boolean;
   showModalEditServiceOrder: boolean;
-  
+  showModalLogin: boolean;
+
   setModalAddPeople: () => void;
   setModalAddSale: () => void;
   setModalAddProducts: () => void;
-
+  setModalAddServiceOrder: () => void;
+  setModalSignUp: () => void;
 
   setModalEditPeople: () => void;
   setModalEditSale: () => void;
   setModalEditProducts: () => void;
-
-  setModalAddServiceOrder: () => void;
   setModalEditServiceOrder: () => void;
+  setModalLogin: () => void;
 
 }
 
@@ -44,6 +46,8 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
   const [showModalEditSales, setShowModalEditSales] = useState(false);
   const [showModalAddServiceOrder, setShowModalAddServiceOrder] = useState(false);
   const [showModalEditServiceOrder, setShowModalEditServiceOrder] = useState(false);
+  const [showModalSignUp, setShowModalSignUp] = useState(false);
+  const [showModalLogin, setShowModalLogin] = useState(false);
 
   const setModalAddPeople = () => {
     setShowModalAddPeople(!showModalAddPeople);
@@ -69,7 +73,6 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
     setShowModalEditSales(!showModalEditSales);
   };
 
-
   const setModalAddServiceOrder = () => {
     setShowModalAddServiceOrder(!showModalAddServiceOrder);
   };
@@ -77,6 +80,14 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
   const setModalEditServiceOrder = () => {
     setShowModalEditServiceOrder(!showModalEditServiceOrder);
   };
+
+  const setModalSignUp = () => {
+    setShowModalSignUp(!showModalSignUp)
+  }
+
+  const setModalLogin = () => {
+    setShowModalLogin(!showModalLogin)
+  }
 
   return (
     <ModalContext.Provider
@@ -89,6 +100,8 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         showModalEditSales,
         showModalAddServiceOrder,
         showModalEditServiceOrder,
+        showModalSignUp,
+        showModalLogin,
         setModalAddPeople,
         setModalEditPeople,
         setModalAddProducts,
@@ -96,7 +109,9 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         setModalAddSale,
         setModalEditSale,
         setModalAddServiceOrder,
-        setModalEditServiceOrder
+        setModalEditServiceOrder,
+        setModalLogin,
+        setModalSignUp
       }}
     >
       {children}

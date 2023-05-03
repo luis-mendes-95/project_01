@@ -15,4 +15,8 @@ export const DivBackgroundModal = styled.div`
     border-radius: 8px;
     box-shadow: 1pt 1pt 5pt black;
   }
+
+  h2{
+    padding: 10px;
+  }
 `;
