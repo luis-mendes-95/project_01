@@ -29,7 +29,8 @@ const AppRoutes = () => {
                 <ProductsProvider>
                   <ModalProvider>
                     <Routes>
-                      <Route path="/" element={<HomePage />} />
+                      <Route path="/" element={<LoginPage />} />
+                      <Route path="/home" element={<HomePage />} />
                       <Route path="/peoplepage" element={<PeoplePage />} />
                       <Route path="/productspage" element={<ProductsPage />} />
                       <Route path="/salespage" element={<SalesPage />} />

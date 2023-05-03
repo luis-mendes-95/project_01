@@ -8,7 +8,7 @@ const HomeLogin = () => {
 
     <DivAdvertising>
       <h2>
-        LIFE PROJECT
+        MyCompany
       </h2>
       <h1>
       GERENCIAR SEU NEGÓCIO FÍSICO E VIRTUAL EM UM SÓ LUGAR RÁPIDO E FÁCIL!

@@ -26,15 +26,7 @@ const FormSignUp = () => {
   return (
     <Modal>
       <FormAdd onSubmit={handleSubmit(submit)}>
-        <div className="divCloseButton">
-          <button
-            onClick={() => {
-              setModalLogin();
-            }}
-          >
-            X
-          </button>
-        </div>
+      <h2>EFETUAR LOGIN:</h2>
 
         <div className="divLabelAndInput">
           <label>Nome de usuário:</label>

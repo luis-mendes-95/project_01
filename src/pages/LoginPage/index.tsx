@@ -19,7 +19,7 @@ const LoginPage = () => {
       <ToastContainer/>
       <HomeLogin />
       <HeaderApp>
-        <button className="buttonAddNew" onClick={setModalSignUp}>CADASTRAR-SE</button>
+        <button onClick={setModalSignUp}>CADASTRAR-SE</button>
         <button onClick={setModalLogin}>EFETUAR LOGIN</button>
       </HeaderApp>
 

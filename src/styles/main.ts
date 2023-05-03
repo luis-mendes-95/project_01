@@ -455,7 +455,8 @@ export const DivAdvertising = styled.div`
 
   h2{
     font-size: 35pt;
-    margin-bottom: 150px;
+    margin-bottom: 25px;
+    text-shadow: 1pt 1pt 5pt black;
   }
 
   .ul_features{

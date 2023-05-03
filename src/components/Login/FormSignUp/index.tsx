@@ -26,15 +26,7 @@ const FormSignUp = () => {
   return (
     <Modal>
       <FormAdd onSubmit={handleSubmit(submit)}>
-        <div className="divCloseButton">
-          <button
-            onClick={() => {
-              setModalSignUp();
-            }}
-          >
-            X
-          </button>
-        </div>
+      <h2>CADASTRAR NOVO USUÁRIO:</h2>
 
         <div className="divLabelAndInput">
           <label>Primeiro Nome:</label>
