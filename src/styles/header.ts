@@ -23,7 +23,7 @@ export const HeaderApp = styled.header`
   button {
     background-color: #fff;
     color: ${blue};
-    padding: 15px 30px;
+    padding: 15px 15px;
     border: none;
     border-radius: 50px;
     margin: 0 20px;

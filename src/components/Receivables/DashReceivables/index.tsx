@@ -6,17 +6,17 @@ import { ProductsContext } from "../../../contexts/products";
 import { SalesContext } from "../../../contexts/sales";
 import { ReceivablesContext } from "../../../contexts/receivables";
 
-const DashSales = () => {
+const DashReceivables = () => {
 
-  const { setModalAddSale, setModalEditSale } = useContext(ModalContext);
-  const { salesDatabase, setIdEdit } = useContext(SalesContext)
+  const { setModalAddReceivable, setModalEditReceivable } = useContext(ModalContext);
+  const { receivableDatabase, setIdEdit } = useContext(ReceivablesContext)
 
   return (
 
     <UlRegs>
 
       <div className="divTitleUlRegs">
-        <h2>Sales</h2>
+        <h2>A RECEBER</h2>
       </div>
 
       <div className="divRegDataItem">
@@ -26,20 +26,20 @@ const DashSales = () => {
         <button
           className="buttonAddNew"
           onClick={() => {
-            setModalAddSale();
+            setModalAddReceivable();
           }}
         >
           +
         </button>
       </div>
 
-      {salesDatabase.map((sale) => {
+      {receivablesDatabase.map((receivable) => {
         return (
-          <li key={sale.id}>
-            <p>{sale.client}</p>
+          <li key={receivable.id}>
+            <p>{receivable.client}</p>
             <button onClick={()=>{
-              setIdEdit(sale.id)
-              setModalEditSale()
+              setModalEditReceivable(receivable.id)
+              setModalEditReceivable()
             }}>Mais detalhes</button>
           </li>
         );
@@ -50,4 +50,4 @@ const DashSales = () => {
   );
 };
 
-export default DashSales;
+export default DashReceivables;
