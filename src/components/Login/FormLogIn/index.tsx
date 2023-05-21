@@ -8,10 +8,12 @@ import { toast } from "react-toastify";
 import IRegisterAccountLogin from "../../../interfaces/accountLogin.interface";
 import "react-toastify/dist/ReactToastify.css";
 import AccountLoginSchema from "../../../schemas/accountLogin.schema";
+import { AccountContext } from "../../../contexts/accounts";
 
 const FormSignUp = () => {
 
   const { setModalLogin } = useContext(ModalContext);
+  const { login } = useContext(AccountContext)
 
   const {
     register,
@@ -20,7 +22,7 @@ const FormSignUp = () => {
   } = useForm<IRegisterAccountLogin>({ resolver: yupResolver(AccountLoginSchema) });
 
   const submit = (data: IRegisterAccountLogin) => {
-    console.log('Request to the API to POST a new Login')
+    login(data)
   };
 
   return (

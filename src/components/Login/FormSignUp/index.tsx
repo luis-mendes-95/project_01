@@ -8,10 +8,13 @@ import { toast } from "react-toastify";
 import IRegisterAccount from "../../../interfaces/account.interface";
 import "react-toastify/dist/ReactToastify.css";
 import AccountSchema from "../../../schemas/account.schema";
+import { AccountContext } from "../../../contexts/accounts";
+import api from "../../../services/api";
 
 const FormSignUp = () => {
 
   const { setModalSignUp } = useContext(ModalContext);
+  const { signUp } = useContext(AccountContext)
 
   const {
     register,
@@ -19,8 +22,10 @@ const FormSignUp = () => {
     formState: { errors },
   } = useForm<IRegisterAccount>({ resolver: yupResolver(AccountSchema) });
 
-  const submit = (data: IRegisterAccount) => {
-    console.log('Request to the API to POST a new Staff account')
+  const submit = async (data: IRegisterAccount) => {
+    // signUp(data)
+    const response = await api.get("/accounts");
+    console.log(response)
   };
 
   return (
