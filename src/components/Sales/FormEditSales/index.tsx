@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ModalContext } from "../../../contexts/modal";
 import { ProductsContext } from "../../../contexts/products";
 import Modal from "../../Modal";
-import { FormAdd } from "../../../styles/main";
+import { FormEdit } from "../../../styles/main";
 import { PeopleContext } from "../../../contexts/people";
 import {
   FormValues,
@@ -54,7 +54,7 @@ const FormEditSale = () => {
 
   return (
     <Modal>
-      <FormAdd onSubmit={handleSubmit(submit)} noValidate>
+      <FormEdit onSubmit={handleSubmit(submit)} noValidate>
         <div className="divCloseButton">
           <button
             onClick={() => {
@@ -240,7 +240,7 @@ const FormEditSale = () => {
             Deletar
           </button>
         </div>
-      </FormAdd>
+      </FormEdit>
     </Modal>
   );
 };

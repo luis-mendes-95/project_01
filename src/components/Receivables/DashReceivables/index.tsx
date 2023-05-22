@@ -36,7 +36,7 @@ const DashReceivables = () => {
       {receivablesDatabase.map((receivable: any) => {
         return (
           <li key={receivable.id}>
-            <p>{receivable.client}</p>
+            <p>{receivable.cpfcnpj}</p>
             <button onClick={()=>{
               setIdEdit(receivable.id)
               setModalEditReceivable()
