@@ -7,24 +7,28 @@ interface iModalProviderFunctions {
   showModalAddProducts: boolean;
   showModalAddServiceOrder: boolean;
   showModalSignUp: boolean;
+  showModalAddReceivable: boolean;
 
   showModalEditPeople: boolean;
   showModalEditSales: boolean;
   showModalEditProducts: boolean;
   showModalEditServiceOrder: boolean;
   showModalLogin: boolean;
+  showModalEditReceivable: boolean;
 
   setModalAddPeople: () => void;
   setModalAddSale: () => void;
   setModalAddProducts: () => void;
   setModalAddServiceOrder: () => void;
   setModalSignUp: () => void;
+  setModalAddReceivable: () => void;
 
   setModalEditPeople: () => void;
   setModalEditSale: () => void;
   setModalEditProducts: () => void;
   setModalEditServiceOrder: () => void;
   setModalLogin: () => void;
+  setModalEditReceivable: () => void;
 
 }
 
@@ -48,6 +52,8 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
   const [showModalEditServiceOrder, setShowModalEditServiceOrder] = useState(false);
   const [showModalSignUp, setShowModalSignUp] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
+  const [showModalAddReceivable, setShowModalAddReceivable] = useState(false);
+  const [showModalEditReceivable, setShowModalEditReceivable] = useState(false);
 
   const setModalAddPeople = () => {
     setShowModalAddPeople(!showModalAddPeople);
@@ -89,6 +95,14 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
     setShowModalLogin(!showModalLogin)
   }
 
+  const setModalAddReceivable = () => {
+    setShowModalAddReceivable(!showModalAddReceivable);
+  };
+
+  const setModalEditReceivable= () => {
+    setShowModalEditReceivable(!showModalEditReceivable);
+  };
+
   return (
     <ModalContext.Provider
       value={{
@@ -102,6 +116,8 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         showModalEditServiceOrder,
         showModalSignUp,
         showModalLogin,
+        showModalAddReceivable,
+        showModalEditReceivable,
         setModalAddPeople,
         setModalEditPeople,
         setModalAddProducts,
@@ -111,7 +127,9 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         setModalAddServiceOrder,
         setModalEditServiceOrder,
         setModalLogin,
-        setModalSignUp
+        setModalSignUp,
+        setModalAddReceivable,
+        setModalEditReceivable
       }}
     >
       {children}

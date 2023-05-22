@@ -17,6 +17,8 @@ import { RegConfigProvider } from "./contexts/regConfig";
 import ServiceOrderPage from "./pages/ServiceOrdersPage";
 import { ServiceOrderProvider } from "./contexts/serviceOrders";
 import LoginPage from "./pages/LoginPage";
+import ReceivablesPage from "./pages/ReceivablePage";
+import { ReceivablesProvider } from "./contexts/receivables";
 
 const AppRoutes = () => {
   return (
@@ -27,20 +29,29 @@ const AppRoutes = () => {
             <SalesProvider>
               <PeopleProvider>
                 <ProductsProvider>
-                  <ModalProvider>
-                    <Routes>
-                      <Route path="/" element={<LoginPage />} />
-                      <Route path="/home" element={<HomePage />} />
-                      <Route path="/peoplepage" element={<PeoplePage />} />
-                      <Route path="/productspage" element={<ProductsPage />} />
-                      <Route path="/salespage" element={<SalesPage />} />
-                      <Route
-                        path="/serviceorderspage"
-                        element={<ServiceOrderPage />}
-                      />
-                      <Route path="/login" element={<LoginPage />} />
-                    </Routes>
-                  </ModalProvider>
+                  <ReceivablesProvider>
+                    <ModalProvider>
+                      <Routes>
+                        <Route path="/" element={<LoginPage />} />
+                        <Route path="/home" element={<HomePage />} />
+                        <Route path="/peoplepage" element={<PeoplePage />} />
+                        <Route
+                          path="/productspage"
+                          element={<ProductsPage />}
+                        />
+                        <Route path="/salespage" element={<SalesPage />} />
+                        <Route
+                          path="/receivables"
+                          element={<ReceivablesPage />}
+                        />
+                        <Route
+                          path="/serviceorderspage"
+                          element={<ServiceOrderPage />}
+                        />
+                        <Route path="/login" element={<LoginPage />} />
+                      </Routes>
+                    </ModalProvider>
+                  </ReceivablesProvider>
                 </ProductsProvider>
               </PeopleProvider>
             </SalesProvider>

@@ -7,15 +7,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PeopleContext } from "../../../contexts/people";
 import { ReceivablesContext } from "../../../contexts/receivables";
-import IRegisterReceivables from "../../../interfaces/receivables.interface";
-import ReceivablesSchema from "../../../schemas/products.schema";
+import { IRegisterReceivable } from "../../../interfaces/receivables.interface";
+import ReceivablesSchema from "../../../schemas/receivables.schema";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormNewReceivable = () => {
   const { registerReceivable, receivablesDatabase } = useContext(ReceivablesContext);
-  const { receivablesDatabase } = useContext(ReceivablesContext);
-  const { setModalAddReceivable } = useContext(ModalContext);
+  const { setModalAddReceivable, setModalEditReceivable, showModalAddReceivable, showModalEditReceivable} = useContext(ModalContext);
   const { peopleDatabase } = useContext(PeopleContext);
 
   const [originalPrice, setOriginalPrice] = useState("R$ 0,00");
@@ -80,9 +79,9 @@ const FormNewReceivable = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterReceivables>({ resolver: yupResolver(ReceivablesSchema) });
+  } = useForm<IRegisterReceivable>({ resolver: yupResolver(ReceivablesSchema) });
 
-  const submit = (data: IRegisterReceivables) => {
+  const submit = (data: IRegisterReceivable) => {
 
     registerReceivable(data);
     setModalAddReceivable();
@@ -103,7 +102,7 @@ const FormNewReceivable = () => {
 
         <div className="divLabelAndInput">
           <label>FORNECEDOR/CLIENTE</label>
-          <select {...register("supplier")}>
+          <select {...register("cpfcnpj")}>
             <option value="">Selecione o cliente/fornecedor:</option>
             {peopleDatabase.map((person) => {
               return (
@@ -114,9 +113,9 @@ const FormNewReceivable = () => {
             })}
           </select>
         </div>
-        {errors.supplierCLient?.message && (
+        {errors.cpfcnpj?.message && (
           <p className="pError" aria-label="error">
-            {errors.supplierClient.message}
+            {errors.cpfcnpj.message}
           </p>
         )}
 
@@ -140,14 +139,14 @@ const FormNewReceivable = () => {
             value={originalPrice}
             onInput={handleOriginalPriceChange}
             placeholder="Insira o valor original aqui"
-            {...register("originalPrice")}
+            {...register("originalValue")}
           />
         </div>
-        {errors.originalPrice?.message && (
+        {/* {errors.originalValue?.message && (
           <p className="pError" aria-label="error">
-            {errors.originalPrice.message}
+            {errors.originalValue.message}
           </p>
-        )}
+        )} */}
 
         <div className="DivButtonsReg">
           <button type="submit" className="buttonSaveReg">

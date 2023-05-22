@@ -1,14 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
-import { IReceivableGenerated } from '../interfaces/receivables.interface';
+import { IRegisterReceivable } from '../interfaces/receivables.interface';
 import { RegConfig } from "../contexts/regConfig";
 import { useContext } from "react";
 
 interface iReceivablesProviderFunctions {
     setIdEdit: (id: number) => void;
-    registerReceivable: (data: IReceivableGenerated) => void;
-    editReceivable: (data: IReceivableGenerated) => void;
+    registerReceivable: (data: IRegisterReceivable) => void;
+    editReceivable: (data: IRegisterReceivable) => void;
     deleteReceivable: (id: number) => void;
-    receivablesDatabase: IReceivableGenerated[]
+    receivablesDatabase: IRegisterReceivable[]
     idToEdit: number;
 }
 
@@ -22,7 +22,7 @@ export const ReceivablesProvider = ({ children }: iReceivablesProviderProps) => 
 
     const { createKey } = useContext(RegConfig)
 
-    const [receivablesDatabase, setReceivablesDatabase] = useState([] as IReceivableGenerated[])
+    const [receivablesDatabase, setReceivablesDatabase] = useState([] as IRegisterReceivable[])
     const [idToEdit, setIdToEdit] = useState(0)
 
     useEffect(() => {
@@ -38,16 +38,17 @@ export const ReceivablesProvider = ({ children }: iReceivablesProviderProps) => 
         setIdToEdit(id)
     }
 
-    const registerReceivable = (data: IReceivableGenerated) => {
+    const registerReceivable = (data: IRegisterReceivable) => {
 
         const newReceivable = {
-            id: createKey(),
-            date: data.date,
-            client: data.client,
-            items: data.items,
-            total: data.total,
+            id: data.id,
+            saleId: data.saleId,
+            cpfcnpj: data.cpfcnpj,
+            description: data.description,
+            originalValue: data.originalValue,
+            received: data.received,
             payType: data.payType,
-            received: data.received
+            obs: data.obs
         }
 
         const newData = [...receivablesDatabase, newReceivable]
@@ -57,16 +58,17 @@ export const ReceivablesProvider = ({ children }: iReceivablesProviderProps) => 
 
     }
 
-    const editReceivable = (data: IReceivableGenerated) => {
+    const editReceivable = (data: IRegisterReceivable) => {
 
         const edittedReceivable = {
-            id: idToEdit,
-            date: data.date,
-            client: data.client,
-            items: data.items,
-            total: data.total,
+            id: data.id,
+            saleId: data.saleId,
+            cpfcnpj: data.cpfcnpj,
+            description: data.description,
+            originalValue: data.originalValue,
+            received: data.received,
             payType: data.payType,
-            received: data.received
+            obs: data.obs
         }
 
         const newDatabase = receivablesDatabase.map((receivable) => {

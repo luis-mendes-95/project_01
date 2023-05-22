@@ -1,25 +1,10 @@
-export interface IItemReceivable {
+export interface IRegisterReceivable {
     id?: number;
     saleId?: number;
+    cpfcnpj: number;
     description: string;
-    originalValue: number | null;
+    originalValue: number | any;
     received: number | null;
     payType?: string;
     obs?: string;
   }
-  
-  export interface IReceivableGenerated {
-    id: number;
-    date: string;
-    client: string;
-    items: Array<IItemReceivable>;
-    total: number;
-    payType?: string;
-    received: number;
-  }
-  
-  export interface iItemPrice {
-    price: number;
-  }
-  
-  // export type FormValues = IRegisterSales;

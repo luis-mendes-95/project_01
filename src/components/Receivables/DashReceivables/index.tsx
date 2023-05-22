@@ -9,7 +9,7 @@ import { ReceivablesContext } from "../../../contexts/receivables";
 const DashReceivables = () => {
 
   const { setModalAddReceivable, setModalEditReceivable } = useContext(ModalContext);
-  const { receivableDatabase, setIdEdit } = useContext(ReceivablesContext)
+  const { receivablesDatabase, setIdEdit } = useContext(ReceivablesContext)
 
   return (
 
@@ -33,12 +33,12 @@ const DashReceivables = () => {
         </button>
       </div>
 
-      {receivablesDatabase.map((receivable) => {
+      {receivablesDatabase.map((receivable: any) => {
         return (
           <li key={receivable.id}>
             <p>{receivable.client}</p>
             <button onClick={()=>{
-              setModalEditReceivable(receivable.id)
+              setIdEdit(receivable.id)
               setModalEditReceivable()
             }}>Mais detalhes</button>
           </li>
